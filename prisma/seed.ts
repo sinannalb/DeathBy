@@ -498,79 +498,112 @@ async function main() {
 
   console.log("[seed] Kategoriler ve ürünler yükleniyor...");
 
+  await prisma.category.createMany({
+    data: categories.map((cat) => ({
+      name: cat.name,
+      slug: cat.slug,
+      rootGroup: cat.rootGroup,
+      sortOrder: cat.sortOrder,
+      isActive: cat.isActive,
+    })),
+    skipDuplicates: true,
+  });
+
+  const dbCategories = await prisma.category.findMany({
+    where: { slug: { in: categories.map((c) => c.slug) } },
+  });
+  const catBySlug = new Map(dbCategories.map((c) => [c.slug, c]));
+
+  // Keep category names/sortOrder in sync for existing categories
+  for (const cat of categories) {
+    const existing = catBySlug.get(cat.slug);
+    if (
+      existing &&
+      (existing.name !== cat.name ||
+        existing.rootGroup !== cat.rootGroup ||
+        existing.sortOrder !== cat.sortOrder)
+    ) {
+      await prisma.category.update({
+        where: { id: existing.id },
+        data: {
+          name: cat.name,
+          rootGroup: cat.rootGroup,
+          sortOrder: cat.sortOrder,
+          isActive: cat.isActive,
+        },
+      });
+    }
+  }
+
+  const productRowsToCreate: Array<{
+    categoryId: string;
+    name: string;
+    slug: string;
+    description: string;
+    price: number;
+    imageUrl: string | null;
+    sortOrder: number;
+    isActive: boolean;
+  }> = [];
+
+  for (const cat of categories) {
+    const dbCat = catBySlug.get(cat.slug);
+    if (!dbCat) continue;
+    for (const prod of cat.products) {
+      productRowsToCreate.push({
+        categoryId: dbCat.id,
+        name: prod.name,
+        slug: prod.slug,
+        description: prod.description,
+        price: prod.price,
+        imageUrl: prod.imageUrl,
+        sortOrder: prod.sortOrder,
+        isActive: prod.isActive,
+      });
+    }
+  }
+
+  await prisma.product.createMany({
+    data: productRowsToCreate,
+    skipDuplicates: true,
+  });
+
+  const dbProducts = await prisma.product.findMany({
+    where: { slug: { in: productRowsToCreate.map((p) => p.slug) } },
+    include: { category: { select: { rootGroup: true } } },
+  });
+
   const allSeededProducts: Array<{
     id: string;
     name: string;
     price: number;
     rootGroup: RootGroup;
+  }> = dbProducts.map((p) => ({
+    id: p.id,
+    name: p.name,
+    price: Number(p.price),
+    rootGroup: p.category.rootGroup,
+  }));
+
+  const availabilityRows: Array<{
+    branchId: string;
+    productId: string;
+    isAvailable: boolean;
   }> = [];
-
-  for (const cat of categories) {
-    const dbCat = await prisma.category.upsert({
-      where: { slug: cat.slug },
-      update: {
-        name: cat.name,
-        rootGroup: cat.rootGroup,
-        sortOrder: cat.sortOrder,
-        isActive: cat.isActive,
-      },
-      create: {
-        name: cat.name,
-        slug: cat.slug,
-        rootGroup: cat.rootGroup,
-        sortOrder: cat.sortOrder,
-        isActive: cat.isActive,
-      },
-    });
-
-    for (const prod of cat.products) {
-      const dbProd = await prisma.product.upsert({
-        where: { slug: prod.slug },
-        update: {
-          categoryId: dbCat.id,
-          name: prod.name,
-          description: prod.description,
-          price: prod.price,
-          imageUrl: prod.imageUrl,
-          sortOrder: prod.sortOrder,
-          isActive: prod.isActive,
-        },
-        create: {
-          categoryId: dbCat.id,
-          name: prod.name,
-          slug: prod.slug,
-          description: prod.description,
-          price: prod.price,
-          imageUrl: prod.imageUrl,
-          sortOrder: prod.sortOrder,
-          isActive: prod.isActive,
-        },
+  for (const prod of allSeededProducts) {
+    for (const branch of branches) {
+      availabilityRows.push({
+        branchId: branch.id,
+        productId: prod.id,
+        isAvailable: true,
       });
-
-      allSeededProducts.push({
-        id: dbProd.id,
-        name: dbProd.name,
-        price: prod.price,
-        rootGroup: dbCat.rootGroup,
-      });
-
-      for (const branch of branches) {
-        await prisma.branchProductAvailability.upsert({
-          where: {
-            branchId_productId: {
-              branchId: branch.id,
-              productId: dbProd.id,
-            },
-          },
-          update: {},
-          create: {
-            branchId: branch.id,
-            productId: dbProd.id,
-            isAvailable: true,
-          },
-        });
-      }
     }
+  }
+  if (availabilityRows.length > 0) {
+    await prisma.branchProductAvailability.createMany({
+      data: availabilityRows,
+      skipDuplicates: true,
+    });
   }
 
   // Ensure a Salep product exists so Salep option rules (Süt Seçimi + Tarçın Seçimi) are always testable
@@ -699,23 +732,20 @@ async function main() {
     "süt",
   ];
 
+  const optionLinks: Array<{
+    productId: string;
+    optionGroupId: string;
+    sortOrder: number;
+  }> = [];
+
   for (const prod of allSeededProducts) {
     const lowerName = trLower(prod.name);
 
     if (lowerName.includes("death by") || lowerName.includes("brownie")) {
-      await prisma.productOptionGroup.upsert({
-        where: {
-          productId_optionGroupId: {
-            productId: prod.id,
-            optionGroupId: iceCreamGroup.id,
-          },
-        },
-        update: { sortOrder: 1 },
-        create: {
-          productId: prod.id,
-          optionGroupId: iceCreamGroup.id,
-          sortOrder: 1,
-        },
+      optionLinks.push({
+        productId: prod.id,
+        optionGroupId: iceCreamGroup.id,
+        sortOrder: 1,
       });
     }
 
@@ -723,38 +753,27 @@ async function main() {
       prod.rootGroup === "DRINK" &&
       milkKeywords.some((kw) => lowerName.includes(kw))
     ) {
-      await prisma.productOptionGroup.upsert({
-        where: {
-          productId_optionGroupId: {
-            productId: prod.id,
-            optionGroupId: milkGroup.id,
-          },
-        },
-        update: { sortOrder: 2 },
-        create: {
-          productId: prod.id,
-          optionGroupId: milkGroup.id,
-          sortOrder: 2,
-        },
+      optionLinks.push({
+        productId: prod.id,
+        optionGroupId: milkGroup.id,
+        sortOrder: 2,
       });
     }
 
     if (lowerName.includes("salep")) {
-      await prisma.productOptionGroup.upsert({
-        where: {
-          productId_optionGroupId: {
-            productId: prod.id,
-            optionGroupId: cinnamonGroup.id,
-          },
-        },
-        update: { sortOrder: 3 },
-        create: {
-          productId: prod.id,
-          optionGroupId: cinnamonGroup.id,
-          sortOrder: 3,
-        },
+      optionLinks.push({
+        productId: prod.id,
+        optionGroupId: cinnamonGroup.id,
+        sortOrder: 3,
       });
     }
+  }
+
+  if (optionLinks.length > 0) {
+    await prisma.productOptionGroup.createMany({
+      data: optionLinks,
+      skipDuplicates: true,
+    });
   }
 
   console.log("[seed] Demo kullanıcılar oluşturuluyor...");
@@ -909,6 +928,36 @@ async function main() {
     const nowMs = Date.now();
     const totalSeedOrders = 120;
 
+    const orderRows: Array<{
+      orderNumber: string;
+      userId: string;
+      branchId: string;
+      status: "COMPLETED";
+      paymentStatus: "PAID";
+      paymentProvider: string;
+      merchantOid: string;
+      subtotal: number;
+      deliveryFee: number;
+      totalAmount: number;
+      customerName: string;
+      customerPhone: string;
+      city: string;
+      district: string;
+      neighborhood: string;
+      fullAddress: string;
+      createdAt: Date;
+      updatedAt: Date;
+    }> = [];
+
+    const orderItemBlueprints: Array<{
+      merchantOid: string;
+      productId: string;
+      productName: string;
+      unitPrice: number;
+      quantity: number;
+      lineTotal: number;
+    }> = [];
+
     for (let i = 0; i < totalSeedOrders; i++) {
       const dayOffset = Math.floor((i * 89) / totalSeedOrders);
       const hourOffset = 10 + (i * 3) % 13;
@@ -925,60 +974,81 @@ async function main() {
             : branchConfigs[2];
 
       const itemCount = (i % 3) + 1;
-      const itemsToCreate: Array<{
-        productId: string;
-        productName: string;
-        unitPrice: number;
-        quantity: number;
-        selectedOptionsJson: [];
-        lineTotal: number;
-      }> = [];
-
+      const seq = String(i + 1).padStart(3, "0");
+      const merchantOid = `SEED-RPT-${seq}`;
       let subtotal = 0;
+
       for (let j = 0; j < itemCount; j++) {
         const prod = productPool[(i * 5 + j * 3) % productPool.length];
         const qty = j === 0 && i % 4 === 0 ? 2 : 1;
         const unitPrice = Number(prod.price) || 250;
         const lineTotal = Number((unitPrice * qty).toFixed(2));
         subtotal += lineTotal;
-        itemsToCreate.push({
+        orderItemBlueprints.push({
+          merchantOid,
           productId: prod.id,
           productName: prod.name,
           unitPrice,
           quantity: qty,
-          selectedOptionsJson: [],
           lineTotal,
         });
       }
 
       const roundedSubtotal = Number(subtotal.toFixed(2));
       const totalAmount = Number((roundedSubtotal + bCfg.fee).toFixed(2));
-      const seq = String(i + 1).padStart(3, "0");
 
-      await prisma.order.create({
-        data: {
-          orderNumber: `DBC-R${seq}`,
-          userId: demoCustomer.id,
-          branchId: bCfg.branch.id,
-          status: "COMPLETED",
-          paymentStatus: "PAID",
-          paymentProvider: "PAYTR",
-          merchantOid: `SEED-RPT-${seq}`,
-          subtotal: roundedSubtotal,
-          deliveryFee: bCfg.fee,
-          totalAmount,
-          customerName: demoCustomer.name,
-          customerPhone: demoCustomer.phone ?? "05321234567",
-          city: "İstanbul",
-          district: bCfg.district,
-          neighborhood: bCfg.neighborhood,
-          fullAddress: "Demo Sipariş Adresi No: 1",
-          createdAt,
-          updatedAt: createdAt,
-          items: {
-            create: itemsToCreate,
-          },
-        },
+      orderRows.push({
+        orderNumber: `DBC-R${seq}`,
+        userId: demoCustomer.id,
+        branchId: bCfg.branch.id,
+        status: "COMPLETED",
+        paymentStatus: "PAID",
+        paymentProvider: "PAYTR",
+        merchantOid,
+        subtotal: roundedSubtotal,
+        deliveryFee: bCfg.fee,
+        totalAmount,
+        customerName: demoCustomer.name,
+        customerPhone: demoCustomer.phone ?? "05321234567",
+        city: "İstanbul",
+        district: bCfg.district,
+        neighborhood: bCfg.neighborhood,
+        fullAddress: "Demo Sipariş Adresi No: 1",
+        createdAt,
+        updatedAt: createdAt,
+      });
+    }
+
+    await prisma.order.createMany({
+      data: orderRows,
+      skipDuplicates: true,
+    });
+
+    const createdOrders = await prisma.order.findMany({
+      where: { merchantOid: { startsWith: "SEED-RPT-" } },
+      select: { id: true, merchantOid: true },
+    });
+    const orderIdByOid = new Map(createdOrders.map((o) => [o.merchantOid, o.id]));
+
+    const itemRowsToCreate = orderItemBlueprints
+      .map((bp) => {
+        const orderId = orderIdByOid.get(bp.merchantOid);
+        if (!orderId) return null;
+        return {
+          orderId,
+          productId: bp.productId,
+          productName: bp.productName,
+          unitPrice: bp.unitPrice,
+          quantity: bp.quantity,
+          selectedOptionsJson: [],
+          lineTotal: bp.lineTotal,
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+
+    if (itemRowsToCreate.length > 0) {
+      await prisma.orderItem.createMany({
+        data: itemRowsToCreate,
       });
     }
   }

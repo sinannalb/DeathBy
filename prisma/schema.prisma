@@ -1,0 +1,263 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  SYSTEM
+  CUSTOMER
+}
+
+enum PaperWidth {
+  MM58
+  MM80
+}
+
+enum BranchManualStatus {
+  AUTO
+  FORCE_OPEN
+  FORCE_CLOSED
+  BUSY
+}
+
+enum RootGroup {
+  FOOD
+  DRINK
+}
+
+enum SelectionType {
+  SINGLE
+  MULTIPLE
+}
+
+enum OrderStatus {
+  RECEIVED
+  PREPARING
+  WAITING_COURIER
+  ON_THE_WAY
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id           String            @id @default(cuid())
+  role         Role              @default(CUSTOMER)
+  name         String
+  phone        String?           @unique
+  email        String?           @unique
+  passwordHash String?
+  branchId     String?
+  branch       Branch?           @relation(fields: [branchId], references: [id], onDelete: SetNull)
+  createdAt    DateTime          @default(now())
+  addresses    CustomerAddress[]
+  orders       Order[]
+}
+
+model OtpCode {
+  id        String    @id @default(cuid())
+  phone     String
+  code      String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([phone, createdAt])
+}
+
+model Branch {
+  id                    String                      @id @default(cuid())
+  name                  String
+  slug                  String                      @unique
+  address               String
+  phone                 String
+  paperWidth            PaperWidth                  @default(MM80)
+  manualStatus          BranchManualStatus          @default(AUTO)
+  isBusy                Boolean                     @default(false)
+  busyUntil             DateTime?
+  busyMessage           String?
+  estimatedMinMinutes   Int                         @default(30)
+  estimatedMaxMinutes   Int                         @default(45)
+  courierEnabled        Boolean                     @default(true)
+  isActive              Boolean                     @default(true)
+  schedules             BranchSchedule[]
+  neighborhoods         DeliveryNeighborhood[]
+  productAvailabilities BranchProductAvailability[]
+  users                 User[]
+  orders                Order[]
+}
+
+model BranchSchedule {
+  id        String  @id @default(cuid())
+  branchId  String
+  branch    Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  dayOfWeek Int
+  openTime  String
+  closeTime String
+  isClosed  Boolean @default(false)
+
+  @@unique([branchId, dayOfWeek])
+}
+
+model DeliveryNeighborhood {
+  id             String  @id @default(cuid())
+  branchId       String
+  branch         Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  city           String
+  district       String
+  neighborhood   String
+  minOrderAmount Decimal @db.Decimal(10, 2)
+  deliveryFee    Decimal @db.Decimal(10, 2)
+  isActive       Boolean @default(true)
+
+  @@unique([city, district, neighborhood])
+  @@index([branchId])
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  rootGroup RootGroup
+  sortOrder Int       @default(0)
+  isActive  Boolean   @default(true)
+  products  Product[]
+}
+
+model Product {
+  id                   String                      @id @default(cuid())
+  categoryId           String
+  category             Category                    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name                 String
+  slug                 String                      @unique
+  description          String                      @default("")
+  price                Decimal                     @db.Decimal(10, 2)
+  imageUrl             String?
+  sortOrder            Int                         @default(0)
+  isActive             Boolean                     @default(true)
+  branchAvailabilities BranchProductAvailability[]
+  optionGroups         ProductOptionGroup[]
+  orderItems           OrderItem[]
+
+  @@index([categoryId])
+}
+
+model BranchProductAvailability {
+  id          String  @id @default(cuid())
+  branchId    String
+  branch      Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  isAvailable Boolean @default(true)
+
+  @@unique([branchId, productId])
+}
+
+model OptionGroup {
+  id            String               @id @default(cuid())
+  name          String
+  selectionType SelectionType        @default(SINGLE)
+  isRequired    Boolean              @default(false)
+  sortOrder     Int                  @default(0)
+  isActive      Boolean              @default(true)
+  items         OptionItem[]
+  products      ProductOptionGroup[]
+}
+
+model OptionItem {
+  id            String      @id @default(cuid())
+  optionGroupId String
+  optionGroup   OptionGroup @relation(fields: [optionGroupId], references: [id], onDelete: Cascade)
+  name          String
+  priceDelta    Decimal     @default(0) @db.Decimal(10, 2)
+  isDefault     Boolean     @default(false)
+  isAvailable   Boolean     @default(true)
+  sortOrder     Int         @default(0)
+
+  @@index([optionGroupId])
+}
+
+model ProductOptionGroup {
+  id            String      @id @default(cuid())
+  productId     String
+  product       Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  optionGroupId String
+  optionGroup   OptionGroup @relation(fields: [optionGroupId], references: [id], onDelete: Cascade)
+  sortOrder     Int         @default(0)
+
+  @@unique([productId, optionGroupId])
+}
+
+model CustomerAddress {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String
+  city         String
+  district     String
+  neighborhood String
+  fullAddress  String
+  directions   String?
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Order {
+  id              String        @id @default(cuid())
+  orderNumber     String        @unique
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+  branchId        String
+  branch          Branch        @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  status          OrderStatus   @default(RECEIVED)
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentProvider String        @default("PAYTR")
+  merchantOid     String        @unique
+  subtotal        Decimal       @db.Decimal(10, 2)
+  deliveryFee     Decimal       @db.Decimal(10, 2)
+  totalAmount     Decimal       @db.Decimal(10, 2)
+  customerName    String
+  customerPhone   String
+  city            String
+  district        String
+  neighborhood    String
+  fullAddress     String
+  directions      String?
+  note            String?
+  printedAt       DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  items           OrderItem[]
+
+  @@index([userId, createdAt])
+  @@index([branchId, status, createdAt])
+}
+
+model OrderItem {
+  id                  String   @id @default(cuid())
+  orderId             String
+  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId           String?
+  product             Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName         String
+  unitPrice           Decimal  @db.Decimal(10, 2)
+  quantity            Int
+  selectedOptionsJson Json
+  lineTotal           Decimal  @db.Decimal(10, 2)
+
+  @@index([orderId])
+}

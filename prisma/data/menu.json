@@ -1,0 +1,1207 @@
+{
+  "categories": [
+    {
+      "name": "Spesiyal Tatlılar",
+      "slug": "spesiyal-tatlilar",
+      "rootGroup": "FOOD",
+      "sortOrder": 1,
+      "products": [
+        {
+          "name": "Death By Chocolate",
+          "slug": "death-by-chocolate",
+          "description": "belçika çikolatası , nutella,oreo,çıtır gevrek hamur ılık akışkan servis",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158769/product/images/txtrbxrfw86kcvjsclw2.jpg"
+        },
+        {
+          "name": "Death By White",
+          "slug": "death-by-white",
+          "description": "belçika çikolatası beyaz çikolata yaban mersini oreo ve çıtır kurabiye hamuru",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158791/product/images/gmahut2vc3wdostmfpag.jpg"
+        },
+        {
+          "name": "Death by crunch",
+          "slug": "death-by-crunch",
+          "description": "",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769203184/product/images/slsdekr6ydvbopobrubw.jpg"
+        },
+        {
+          "name": "Death by 3 çikolata",
+          "slug": "death-by-3-cikolata",
+          "description": "",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769203242/product/images/klnv7einqp1x5gb9gyqw.jpg"
+        },
+        {
+          "name": "death by fındık",
+          "slug": "death-by-findik",
+          "description": "treyağlı çıtır hamur fındık kreması ve oreo",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1785952734/product/images/bwn9ktfejx0oku92yesu.jpg"
+        },
+        {
+          "name": "Death By Pistachios",
+          "slug": "death-by-pistachios",
+          "description": "Kıtır tereyağlı hamur, az belçika çikolatası, antep fıstığı ezmesi",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158824/product/images/ahcoc0fs8sqqki23ucrp.jpg"
+        },
+        {
+          "name": "Kestane Tart",
+          "slug": "kestane-tart",
+          "description": "",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1774365072/product/images/gl7gijeul2xufdegqsi4.jpg"
+        },
+        {
+          "name": "death y raffaello",
+          "slug": "death-y-raffaello",
+          "description": "",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158852/product/images/b8shfktobnryudjmmcxx.jpg"
+        },
+        {
+          "name": "DEATH BY DUBAİ",
+          "slug": "death-by-dubai",
+          "description": "iki farklı bol çikolata tereyağlı çıtır fıstık sosu ve kaymaklı krema",
+          "priceTry": 575,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158957/product/images/varafngoi3pbm41emzps.jpg"
+        },
+        {
+          "name": "maraş usulü kesme dondurma",
+          "slug": "maras-usulu-kesme-dondurma",
+          "description": "",
+          "priceTry": 60,
+          "imageUrl": null
+        },
+        {
+          "name": "Death By Red",
+          "slug": "death-by-red",
+          "description": "belçika çikolatası nutella kırmızı orman meyveleri çıtır gevrek hamur",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158979/product/images/qdmjeldrg0aafuzrhliy.jpg"
+        },
+        {
+          "name": "Death By Munchies",
+          "slug": "death-by-munchies",
+          "description": "belçika çikolatası süt reçeli ceviz oreo ve çıtır kurabiye hamuru",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756159024/product/images/us4geahdnqelgodgq4dk.jpg"
+        },
+        {
+          "name": "Death By Lotus",
+          "slug": "death-by-lotus",
+          "description": "belçika çikolatası lotus kreması ve lotus bisküvisi oreo ve çıtır kurabiye hamuru",
+          "priceTry": 375,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738447155/product/images/kqbynyggwd005epljvgq.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Fırından Tuzlu Lezzetler",
+      "slug": "firindan-tuzlu-lezzetler",
+      "rootGroup": "FOOD",
+      "sortOrder": 2,
+      "products": [
+        {
+          "name": "Mozorella Sandviç",
+          "slug": "mozorella-sandvic",
+          "description": "tek parça panini ekmek, mozerella, pesto sos, domates",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1757005422/product/images/umy78xlq7esfpiay4fhw.jpg"
+        },
+        {
+          "name": "4 Peynirli Sandviç",
+          "slug": "4-peynirli-sandvic",
+          "description": "Krem peynir, eski kaşar, taze kaşar, chedar",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1757005505/product/images/e3c6ftjzyt2hjs8qo4hm.jpg"
+        },
+        {
+          "name": "Peynirli Haşhaşlı Sandivç",
+          "slug": "peynirli-hashasli-sandivc",
+          "description": "2 kat kaymak, eski kaşar, taze kaşar,",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1757005699/product/images/qvrxaxhfom6kai1gnqf6.jpg"
+        },
+        {
+          "name": "Labneli Açma",
+          "slug": "labneli-acma",
+          "description": "( karabuğday unu tulum peyniri zeytin ve zeytin yağı )",
+          "priceTry": 160,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1790797945/product/images/ltbusewhqui3e4fiq4eo.jpg"
+        },
+        {
+          "name": "Glutensiz Mini Karabuğday Poğaça",
+          "slug": "glutensiz-mini-karabugday-pogaca",
+          "description": "( karabuğday unu tulum peyniri zeytin ve zeytin yağı )",
+          "priceTry": 85,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1790797999/product/images/y0tkxahef5ju6y5xrach.jpg"
+        },
+        {
+          "name": "Kıtır Siyez Kurabiyesi",
+          "slug": "kitir-siyez-kurabiyesi",
+          "description": "Tereyağ siyez unu çörek otu ve susam ile hazırlanan kıtır kurabiye. 3 adet olarak servis edilir.",
+          "priceTry": 75,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1790798012/product/images/igjzpq1mwhxilodd6kwu.jpg"
+        },
+        {
+          "name": "Siyez Unlu Poğaça",
+          "slug": "siyez-unlu-pogaca",
+          "description": "Siyez unuyla hazırlanan lezzetli poğaça tereyağ dereotu çörek otu ve susam ile zenginleştirilmiştir",
+          "priceTry": 35,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1790798025/product/images/pa2pmcsurze5r8n7lofc.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Fransız Patisseries",
+      "slug": "fransiz-patisseries",
+      "rootGroup": "FOOD",
+      "sortOrder": 3,
+      "products": [
+        {
+          "name": "Mösyö Pistachios",
+          "slug": "mosyo-pistachios",
+          "description": "",
+          "priceTry": 450,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158500/product/images/nksjgayfwrtqnpisekrl.jpg"
+        },
+        {
+          "name": "Madame Red Lemon",
+          "slug": "madame-red-lemon",
+          "description": "",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158526/product/images/hqrg7qt4lk7uomhndc79.jpg"
+        },
+        {
+          "name": "Petite Banane",
+          "slug": "petite-banane",
+          "description": "",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1757091116/product/images/wqu1aycjjhew2vsfzz6s.jpg"
+        },
+        {
+          "name": "mango pasta",
+          "slug": "mango-pasta",
+          "description": "",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1751817863/product/images/w8ctpsv0hg1ibd5muvqu.jpg"
+        },
+        {
+          "name": "blueberry pasta",
+          "slug": "blueberry-pasta",
+          "description": "",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158559/product/images/glwvyioutn4wry4hxu7n.jpg"
+        },
+        {
+          "name": "cafe a la creme",
+          "slug": "cafe-a-la-creme",
+          "description": "",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158597/product/images/dgawmudv5vxwmuj8ude0.jpg"
+        },
+        {
+          "name": "Petite Le Nut",
+          "slug": "petite-le-nut",
+          "description": "",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158646/product/images/ldqmi68n9sti6sijwdyp.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Brownies",
+      "slug": "brownies",
+      "rootGroup": "FOOD",
+      "sortOrder": 4,
+      "products": [
+        {
+          "name": "İki Çikolatalı Browni",
+          "slug": "iki-cikolatali-browni",
+          "description": "Yoğun Akışkan Bitter ve Beyaz Çikolata",
+          "priceTry": 275,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738447014/product/images/y3nrnklnwqkmtvbyahmp.jpg"
+        },
+        {
+          "name": "Bademli Beyaz Çikolatalı Browni",
+          "slug": "bademli-beyaz-cikolatali-browni",
+          "description": "Yoğun Akışkan Beyaz Çikolata, Badem Unu, File Badem, Hindistan Cevizi",
+          "priceTry": 275,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158725/product/images/cmgxzob3uziox7eb0pfy.jpg"
+        },
+        {
+          "name": "Vişneli Brownie",
+          "slug": "visneli-brownie",
+          "description": "",
+          "priceTry": 275,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738002661/product/images/yjcj7uzexac56cx5zxgf.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Cheesecake San Sebastian",
+      "slug": "cheesecake-san-sebastian",
+      "rootGroup": "FOOD",
+      "sortOrder": 5,
+      "products": [
+        {
+          "name": "San Sebastian Classic",
+          "slug": "san-sebastian-classic",
+          "description": "Yumuşacık Kaymaksı Orjinal Tarif",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738003005/product/images/y6qrwnf4obre66lk0iyp.jpg"
+        },
+        {
+          "name": "San Sebastian Purple Velvet",
+          "slug": "san-sebastian-purple-velvet",
+          "description": "İçi Yaban Mersini Dolgulu",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738003085/product/images/tcqpccxkmhd8sydmkma8.jpg"
+        },
+        {
+          "name": "San Sebastian Üç Çikolata",
+          "slug": "san-sebastian-uc-cikolata",
+          "description": "Nutella, Sütlü Çikolata ve Bitter Çikolata Parçaları",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738003073/product/images/djyturi4oos47y9cl2t9.jpg"
+        },
+        {
+          "name": "San Sebastian Dark",
+          "slug": "san-sebastian-dark",
+          "description": "Yoğun Çikolata ve Oreo",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738003101/product/images/n42vqdqe8w9xq6knu1ke.jpg"
+        },
+        {
+          "name": "San Sebastian Green Velvet",
+          "slug": "san-sebastian-green-velvet",
+          "description": "İçi Hafif Fıstık ve Yoğun Çikolata Aromalı",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738447349/product/images/tutylbhrvr9jea4ctcit.jpg"
+        },
+        {
+          "name": "San Sebastian Beyaz Çikolatalı",
+          "slug": "san-sebastian-beyaz-cikolatali",
+          "description": "",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738621582/product/images/baugqt2uhlinsumxqskk.jpg"
+        },
+        {
+          "name": "San Sebastian Brulee",
+          "slug": "san-sebastian-brulee",
+          "description": "Üzerine Sertleştirilmiş Karamelize Şeker",
+          "priceTry": 325,
+          "imageUrl": null
+        },
+        {
+          "name": "San Sebastian Beyaz Çikolata",
+          "slug": "san-sebastian-beyaz-cikolata",
+          "description": "",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1775233549/product/images/dk89wol6sk6tdbtbkvgc.jpg"
+        },
+        {
+          "name": "Çok Çikolatalı San Sebastian",
+          "slug": "cok-cikolatali-san-sebastian",
+          "description": "Dark, beyaz çikolata, nutella",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756159447/product/images/dppaskv8wsqmorh3ewtl.jpg"
+        },
+        {
+          "name": "Bay San Sebastian",
+          "slug": "bay-san-sebastian",
+          "description": "muzlu karemel, bal badem, green",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756159400/product/images/i6ttvwhibbd3fjajvlcr.jpg"
+        },
+        {
+          "name": "San Sebastian Woman",
+          "slug": "san-sebastian-woman",
+          "description": "Orman meyve, frambuaz, purple",
+          "priceTry": 400,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756159141/product/images/sdqhlwiklhxagozada7m.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Cream Puff Pastry",
+      "slug": "cream-puff-pastry",
+      "rootGroup": "FOOD",
+      "sortOrder": 6,
+      "products": [
+        {
+          "name": "Bluberries cream puff",
+          "slug": "bluberries-cream-puff",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769202586/product/images/sd77bgwypiodek46oc7d.jpg"
+        },
+        {
+          "name": "Lotuslu cream puff",
+          "slug": "lotuslu-cream-puff",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769202764/product/images/sl3i8iawpvw2pcgdvtuh.jpg"
+        },
+        {
+          "name": "Krokanlı cream puff",
+          "slug": "krokanli-cream-puff",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769202862/product/images/hndgpv3k5bsqqhbom6ea.jpg"
+        },
+        {
+          "name": "Pistachios cream puff",
+          "slug": "pistachios-cream-puff",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769202934/product/images/ybrq6ynh9hky4akawur3.jpg"
+        },
+        {
+          "name": "Marshmallow cream puff",
+          "slug": "marshmallow-cream-puff",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769202994/product/images/ecpbxfbeklvi2wrkxmwb.jpg"
+        },
+        {
+          "name": "White chocolate cream puff",
+          "slug": "white-chocolate-cream-puff",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1769203053/product/images/m4e4vzt6a00o35boyxct.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Fresh Yoğurt Cheesecakes",
+      "slug": "fresh-yogurt-cheesecakes",
+      "rootGroup": "FOOD",
+      "sortOrder": 7,
+      "products": [
+        {
+          "name": "Limonlu Naneli Ters Cheesecake",
+          "slug": "limonlu-naneli-ters-cheesecake",
+          "description": "Limon, nane, yoğurt, labne",
+          "priceTry": 325,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786124176/product/images/cvaay1hsqelhfxnwq4xi.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Magnolia New York",
+      "slug": "magnolia-newyork",
+      "rootGroup": "FOOD",
+      "sortOrder": 8,
+      "products": [
+        {
+          "name": "Beyaz Çikolatalı Çilekli Pasta Mag",
+          "slug": "beyaz-cikolatali-cilekli-pasta-mag",
+          "description": "Amerikan Kreması, Çilek, Beyaz Çikolata, Yumuşak Kek Parçaları",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738002960/product/images/iwrltwpese2y3hqq4qew.jpg"
+        },
+        {
+          "name": "Nutella-Çilek newyork Mag",
+          "slug": "nutella-cilek-newyork-mag",
+          "description": "Çilek, Cici Bebe, Nutella ve Amerikan Kreması",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756759828/product/images/em2lvi39zppqcludvoqj.jpg"
+        },
+        {
+          "name": "Nutella- Muz newyork Mag",
+          "slug": "nutella-muz-newyork-mag",
+          "description": "Muz, Cici Bebe, Nutella ve Amerikan Kreması",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738002978/product/images/qxcikm2iurakn3oy12hq.jpg"
+        },
+        {
+          "name": "Orman Meyveli Magnolia",
+          "slug": "orman-meyveli-magnolia",
+          "description": "",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738446976/product/images/dx0nlitp6m9ihpzhnmzp.jpg"
+        }
+      ]
+    },
+    {
+      "name": "New York Islak Kekler",
+      "slug": "newyork-islak-kekler",
+      "rootGroup": "FOOD",
+      "sortOrder": 9,
+      "products": [
+        {
+          "name": "Carrot Cake",
+          "slug": "carrot-cake",
+          "description": "Taze Elma, Havuç, Ceviz, İki Kat Peynirli Krema, İki Kat Kek",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1737999286/product/images/fjyf1gwekadvqq6brobr.jpg"
+        },
+        {
+          "name": "Devil's Dream Cake",
+          "slug": "devil-s-dream-cake",
+          "description": "Üç Çikolata, İki Kat Kek, İki Kat Çikolata",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1738002627/product/images/tlwygaehixnmgxuogicv.jpg"
+        },
+        {
+          "name": "Mud Cake Classic",
+          "slug": "mud-cake-classic",
+          "description": "yoğun belçika çikolatası fındık parçalı sütlü çikolata oreo ılık akışkan servis",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158686/product/images/hnkr2f4c70u8w6rnfjcw.jpg"
+        },
+        {
+          "name": "Mud Cake Raspberry",
+          "slug": "mud-cake-raspberry",
+          "description": "yoğun belçika çikolatası taze frambuaz ılık akışkan servis",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158698/product/images/zc7za8ub1zqv82mxvfhh.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Kavanoz Tatlılar",
+      "slug": "kavanoz-tatlilar",
+      "rootGroup": "FOOD",
+      "sortOrder": 10,
+      "products": [
+        {
+          "name": "Tiramisu",
+          "slug": "tiramisu",
+          "description": "Peynirli Krema, Kahve, Kedi Dili ve Kakao",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1756158480/product/images/p9osrmg4asfd529ek8cv.jpg"
+        },
+        {
+          "name": "Profiterol",
+          "slug": "profiterol",
+          "description": "Yoğun Çikolata, Hafif Krema ve Yumuşak Profiterol Hamuru",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1750619504/product/images/qfvqms2gxtfp2sb9waab.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Soft İçecekler",
+      "slug": "soft-icecekler",
+      "rootGroup": "DRINK",
+      "sortOrder": 11,
+      "products": [
+        {
+          "name": "soda",
+          "slug": "soda",
+          "description": "",
+          "priceTry": 125,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122294/product/images/upsn0h1ykjjxnxnckxzt.jpg"
+        },
+        {
+          "name": "coco cola normal",
+          "slug": "coco-cola-normal",
+          "description": "",
+          "priceTry": 150,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122369/product/images/o56fe3lt8tf2mrtuyk1e.jpg"
+        },
+        {
+          "name": "cola zero",
+          "slug": "cola-zero",
+          "description": "",
+          "priceTry": 150,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122382/product/images/uk6cv4jh0k6i2bjvdqka.jpg"
+        },
+        {
+          "name": "SÜT",
+          "slug": "sut",
+          "description": "",
+          "priceTry": 125,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122409/product/images/lmmaqvhin0iptwaa1hwr.jpg"
+        },
+        {
+          "name": "Su",
+          "slug": "su",
+          "description": "",
+          "priceTry": 45,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122473/product/images/ndnc1mwcp3vvvxqqsjlh.jpg"
+        },
+        {
+          "name": "churchill",
+          "slug": "churchill",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122307/product/images/f4e9ic2swcxujfja7spc.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Sıcak Kahveler",
+      "slug": "sicak-kahveler",
+      "rootGroup": "DRINK",
+      "sortOrder": 12,
+      "products": [
+        {
+          "name": "Americano",
+          "slug": "americano",
+          "description": "",
+          "priceTry": 175,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033659/product/images/ufepckjypxbdgvsypj3h.jpg"
+        },
+        {
+          "name": "Capuccino",
+          "slug": "capuccino",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033702/product/images/ayeylxuhpaxkoaeujmxa.jpg"
+        },
+        {
+          "name": "Chemex",
+          "slug": "chemex",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033769/product/images/deewqzcywoiaiouyf3jb.jpg"
+        },
+        {
+          "name": "Cortado",
+          "slug": "cortado",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033793/product/images/ol9eo36ivcatxcrlkoqc.jpg"
+        },
+        {
+          "name": "Double Espresso",
+          "slug": "double-espresso",
+          "description": "",
+          "priceTry": 175,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122745/product/images/quttguvcgfaafp5sqyeq.jpg"
+        },
+        {
+          "name": "Espresso",
+          "slug": "espresso",
+          "description": "",
+          "priceTry": 150,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122763/product/images/ysym59r4kccqefqzri9u.jpg"
+        },
+        {
+          "name": "Filtre Kahve",
+          "slug": "filtre-kahve",
+          "description": "",
+          "priceTry": 160,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033882/product/images/ryjhcccis3p1dwrz0ciq.jpg"
+        },
+        {
+          "name": "Flat White",
+          "slug": "flat-white",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033895/product/images/lhnhg1u1jnhikcfbjeai.jpg"
+        },
+        {
+          "name": "Honey Latte",
+          "slug": "honey-latte",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033997/product/images/u1k9noeffzo1fvbxh9mg.jpg"
+        },
+        {
+          "name": "Karamel Latte",
+          "slug": "karamel-latte",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033959/product/images/kolsvl9wcqrztcwro9lm.jpg"
+        },
+        {
+          "name": "Latte",
+          "slug": "latte",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786033984/product/images/roiomvpej9ps5fbz00gb.jpg"
+        },
+        {
+          "name": "Mocha",
+          "slug": "mocha",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786034064/product/images/isn6bhtzt5c7mfscqczx.jpg"
+        },
+        {
+          "name": "Türk Kahvesi",
+          "slug": "turk-kahvesi",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122691/product/images/ur5xeogjjj4a2ab4fizx.jpg"
+        },
+        {
+          "name": "V60",
+          "slug": "v60",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786034098/product/images/n3y65pnektsarqdqirng.jpg"
+        },
+        {
+          "name": "Vanilya Latte",
+          "slug": "vanilya-latte",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786034122/product/images/yfvlmboz6bwgl7yr41pi.jpg"
+        },
+        {
+          "name": "White Mocha",
+          "slug": "white-mocha",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786034136/product/images/musseakkh8gdaxwbuhnm.jpg"
+        },
+        {
+          "name": "double türk kahvesi",
+          "slug": "double-turk-kahvesi",
+          "description": "",
+          "priceTry": 300,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122669/product/images/toj3hpe1f9fho49cnil1.jpg"
+        },
+        {
+          "name": "Pistachio Latte",
+          "slug": "pistachio-latte",
+          "description": "antep fıstıgı püresi espresso shot ve süt",
+          "priceTry": 240,
+          "imageUrl": null
+        },
+        {
+          "name": "lotus latte",
+          "slug": "lotus-latte",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786034163/product/images/d29nas8ouicsc1w2y7jh.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Soğuk Kahveler",
+      "slug": "soguk-kahveler",
+      "rootGroup": "DRINK",
+      "sortOrder": 13,
+      "products": [
+        {
+          "name": "Cold Brew",
+          "slug": "cold-brew",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123724/product/images/trjyevg4etwf22krqjk3.jpg"
+        },
+        {
+          "name": "Cold Brew Latte",
+          "slug": "cold-brew-latte",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039150/product/images/chb8hojg3wyampf73z7f.jpg"
+        },
+        {
+          "name": "Double Iced Espresso",
+          "slug": "double-iced-espresso",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039244/product/images/kv8iuzzdowpnnkcujra0.jpg"
+        },
+        {
+          "name": "Iced Americano",
+          "slug": "iced-americano",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039273/product/images/gtqzy34vd4pxrhkugfgr.jpg"
+        },
+        {
+          "name": "Iced Filtre Kahve",
+          "slug": "iced-filtre-kahve",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039292/product/images/bn85yfdjecij5gd923mm.jpg"
+        },
+        {
+          "name": "Iced Karamel Latte",
+          "slug": "iced-karamel-latte",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039341/product/images/rnpjvjmtt1yvscjrpesi.jpg"
+        },
+        {
+          "name": "Iced Latte",
+          "slug": "iced-latte",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039356/product/images/codrmvfhnpx0ypksu5mt.jpg"
+        },
+        {
+          "name": "Iced Mint Coffee",
+          "slug": "iced-mint-coffee",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039379/product/images/gychgx9oqsjbstnvbcvt.jpg"
+        },
+        {
+          "name": "Iced Mocha",
+          "slug": "iced-mocha",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039392/product/images/stz1j18swhgzmw5cowtg.jpg"
+        },
+        {
+          "name": "Iced Stawberry Latte",
+          "slug": "iced-stawberry-latte",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039467/product/images/iuco5rrlkzc4uunzzy5r.jpg"
+        },
+        {
+          "name": "Iced Vanilya Latte",
+          "slug": "iced-vanilya-latte",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039552/product/images/pufkkn7gan37zimhegre.jpg"
+        },
+        {
+          "name": "Iced White Chocolate Mocha",
+          "slug": "iced-white-chocolate-mocha",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039577/product/images/v1f3wdarwr8paalalnqb.jpg"
+        },
+        {
+          "name": "Sparkling Espresso",
+          "slug": "sparkling-espresso",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039597/product/images/oqy6qbq0rqtgluc0b0ld.jpg"
+        },
+        {
+          "name": "Pistachio Ice Latte",
+          "slug": "pistachio-ice-latte",
+          "description": "antep fıstığı püresi espresso shot ve süt",
+          "priceTry": 240,
+          "imageUrl": null
+        },
+        {
+          "name": "ıced lotus latte",
+          "slug": "iced-lotus-latte",
+          "description": "",
+          "priceTry": 220,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039636/product/images/lomizeyodotum7mozbka.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Bitki Çayları",
+      "slug": "bitki-caylari",
+      "rootGroup": "DRINK",
+      "sortOrder": 14,
+      "products": [
+        {
+          "name": "Bardak Çay",
+          "slug": "bardak-cay",
+          "description": "",
+          "priceTry": 75,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039867/product/images/tbxf3uzg78niu4tvu1o2.jpg"
+        },
+        {
+          "name": "Fincan Çay",
+          "slug": "fincan-cay",
+          "description": "",
+          "priceTry": 90,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122782/product/images/yrjjso3vavoxxoskq8j4.jpg"
+        },
+        {
+          "name": "Hibiskus Çayı",
+          "slug": "hibiskus-cayi",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039969/product/images/geyhunk3ogxjwstatfhr.jpg"
+        },
+        {
+          "name": "Kış Çayı",
+          "slug": "kis-cayi",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786039958/product/images/bcuy2ixvzttsifud3p2x.jpg"
+        },
+        {
+          "name": "Salep",
+          "slug": "salep",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786040011/product/images/lweos1lzldira95sh8yo.jpg"
+        },
+        {
+          "name": "Sıcak Çikolata",
+          "slug": "sicak-cikolata",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786040036/product/images/xer0iuuqdoo2klbvxlo0.jpg"
+        },
+        {
+          "name": "Tomurcuk Ihlamur",
+          "slug": "tomurcuk-ihlamur",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786040051/product/images/bzkxr9vumjuef5muj61c.jpg"
+        },
+        {
+          "name": "Yeşil Çay",
+          "slug": "yesil-cay",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786040127/product/images/skjvrqn48brv5g2g1sub.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Frozen's",
+      "slug": "frozen-s",
+      "rootGroup": "DRINK",
+      "sortOrder": 15,
+      "products": [
+        {
+          "name": "Ananaslı Frozen",
+          "slug": "ananasli-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121165/product/images/sfbau4zenkzt0iqachhx.jpg"
+        },
+        {
+          "name": "Frambuazlı Frozen",
+          "slug": "frambuazli-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121180/product/images/smfrr6oiqlavfeji5yqy.jpg"
+        },
+        {
+          "name": "Karadutlu Frozen",
+          "slug": "karadutlu-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121193/product/images/xhskfemwdyzovbjokama.jpg"
+        },
+        {
+          "name": "Karpuzlu Frozen",
+          "slug": "karpuzlu-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121670/product/images/pjneznzq8t6c3kthx31h.jpg"
+        },
+        {
+          "name": "Kavunlu Frozen",
+          "slug": "kavunlu-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121705/product/images/bqyak6plxvgbk8aojp7m.jpg"
+        },
+        {
+          "name": "Mangolu Frozen",
+          "slug": "mangolu-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121292/product/images/wqqosfsgwyj7mlt6behv.jpg"
+        },
+        {
+          "name": "Orman Meyveli Frozen",
+          "slug": "orman-meyveli-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121316/product/images/ck7nfhh405nxawke7qvf.jpg"
+        },
+        {
+          "name": "Passion Meyveli Frozen",
+          "slug": "passion-meyveli-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121349/product/images/uwzweqdpbdvnllkbhvv3.jpg"
+        },
+        {
+          "name": "Yaban Mersinli Frozen",
+          "slug": "yaban-mersinli-frozen",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786121420/product/images/as0o9yxsi8a7vtokesdg.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Frappes",
+      "slug": "frappes",
+      "rootGroup": "DRINK",
+      "sortOrder": 16,
+      "products": [
+        {
+          "name": "Frappe Black Chocolate",
+          "slug": "frappe-black-chocolate",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123359/product/images/yvhw1jetvxarvwy4qzdg.jpg"
+        },
+        {
+          "name": "Frappe Frambuaz",
+          "slug": "frappe-frambuaz",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123380/product/images/edy8iv46omfc83bowizx.jpg"
+        },
+        {
+          "name": "Frappe Karamel",
+          "slug": "frappe-karamel",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123394/product/images/vsopxw6flt0fimafqszh.jpg"
+        },
+        {
+          "name": "Frappe Stawberry",
+          "slug": "frappe-stawberry",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123438/product/images/wowmjuit4wpxnf5vf0ez.jpg"
+        },
+        {
+          "name": "Frappe Vanilya",
+          "slug": "frappe-vanilya",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123461/product/images/naezjnjgpacrcw1gzkeq.jpg"
+        },
+        {
+          "name": "Frappe White Chocolate",
+          "slug": "frappe-white-chocolate",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123482/product/images/scijszydflnuyvlyut1j.jpg"
+        },
+        {
+          "name": "lotus frappe",
+          "slug": "lotus-frappe",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786123498/product/images/pjuzj36hvvl2ijojv5xy.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Buzlu Bitki Çayları",
+      "slug": "buzlu-bitki-caylari",
+      "rootGroup": "DRINK",
+      "sortOrder": 17,
+      "products": [
+        {
+          "name": "Buzlu Hibiskus Çayı",
+          "slug": "buzlu-hibiskus-cayi",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786043849/product/images/euj12b10pu3akisuizxh.jpg"
+        },
+        {
+          "name": "Buzlu Yeşil Çay",
+          "slug": "buzlu-yesil-cay",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786043887/product/images/lxsmxdoz4kgl348ziyhc.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Smoothies",
+      "slug": "smoothies",
+      "rootGroup": "DRINK",
+      "sortOrder": 18,
+      "products": [
+        {
+          "name": "Ananaslı Smoothie",
+          "slug": "ananasli-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786117756/product/images/cjyoyufavqzwp9cfv1wp.jpg"
+        },
+        {
+          "name": "Çilekli Smoothie",
+          "slug": "cilekli-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786117861/product/images/nsskubvixkoyc3vnvjwk.jpg"
+        },
+        {
+          "name": "Frambuazlı Smoothie",
+          "slug": "frambuazli-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120482/product/images/za4btjyxlyrk7rgl1mb8.jpg"
+        },
+        {
+          "name": "Karadutlu Smoothie",
+          "slug": "karadutlu-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120528/product/images/rufsxpsly1g1zpseyg2z.jpg"
+        },
+        {
+          "name": "Kavunlu Smoothie",
+          "slug": "kavunlu-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120555/product/images/jlrvzz8yyu6bchjikueu.jpg"
+        },
+        {
+          "name": "Mangolu Smoothie",
+          "slug": "mangolu-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120572/product/images/txhcygx4vvtzckbgambp.jpg"
+        },
+        {
+          "name": "Orman Meyveli Smoothie",
+          "slug": "orman-meyveli-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120593/product/images/rpr1ax7v7bfthexhcqgo.jpg"
+        },
+        {
+          "name": "Passion Smoothie",
+          "slug": "passion-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120608/product/images/yxkey7dpb43vr5h3wdj3.jpg"
+        },
+        {
+          "name": "Şeftalili Smoothie",
+          "slug": "seftalili-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120638/product/images/z0rm9zsobrljqauh0ung.jpg"
+        },
+        {
+          "name": "Yabanmersinli Smoothie",
+          "slug": "yabanmersinli-smoothie",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786120660/product/images/iehvx7szaojsiycx6y79.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Ev Yapımı Ice Teas",
+      "slug": "ev-yapimi-ice-teas",
+      "rootGroup": "DRINK",
+      "sortOrder": 19,
+      "products": [
+        {
+          "name": "Ice Tea Green",
+          "slug": "ice-tea-green",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786044080/product/images/d2k3swxgnorzvub2wcqm.jpg"
+        },
+        {
+          "name": "Ice Tea Limon",
+          "slug": "ice-tea-limon",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786044090/product/images/bky3ooqyokrifl1t9pop.jpg"
+        },
+        {
+          "name": "Ice Tea Red",
+          "slug": "ice-tea-red",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786044161/product/images/wusl1mfx5pw29fpj67fi.jpg"
+        },
+        {
+          "name": "ıce Tea Şeftali",
+          "slug": "ice-tea-seftali",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786044181/product/images/dseigmhw4wdvtfkkosgc.jpg"
+        },
+        {
+          "name": "Ice Tea Mango",
+          "slug": "ice-tea-mango",
+          "description": "",
+          "priceTry": 200,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786044209/product/images/svhjam0c9kt5gfjzbpb2.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Soğuk İçecekler",
+      "slug": "soguk-icecekler",
+      "rootGroup": "DRINK",
+      "sortOrder": 20,
+      "products": [
+        {
+          "name": "Iced Chocolate",
+          "slug": "iced-chocolate",
+          "description": "",
+          "priceTry": 250,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786122095/product/images/xj71hqxrwyurapmdwfoq.jpg"
+        },
+        {
+          "name": "Hibiskus Limonata",
+          "slug": "hibiskus-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111730/product/images/xnnwq49ji6yzkmi97k40.jpg"
+        },
+        {
+          "name": "Elmalı Limonata",
+          "slug": "elmali-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111930/product/images/dlfdt5weliyr6ijnjnlm.jpg"
+        },
+        {
+          "name": "Çilekli Limonata",
+          "slug": "cilekli-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111942/product/images/ud80ejujv5inwe4gorpv.jpg"
+        },
+        {
+          "name": "Klasik Limonata",
+          "slug": "klasik-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111769/product/images/lhjyry2pikuvdesraolg.jpg"
+        },
+        {
+          "name": "Naneli Limonata",
+          "slug": "naneli-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111757/product/images/ewylgdu5nh7udpbnskq0.jpg"
+        },
+        {
+          "name": "Brezilya Limonatası",
+          "slug": "brezilya-limonatasi",
+          "description": "limon süt",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111780/product/images/akmbtjqhnl2h3fh9faoo.jpg"
+        },
+        {
+          "name": "Karpuzlu Limonata",
+          "slug": "karpuzlu-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111954/product/images/kpqz2dcmnkzemjecncfl.jpg"
+        },
+        {
+          "name": "Mango Limonata",
+          "slug": "mango-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111962/product/images/l3zbtq3omjka9xuxlpgj.jpg"
+        },
+        {
+          "name": "Passion Limonata",
+          "slug": "passion-limonata",
+          "description": "",
+          "priceTry": 190,
+          "imageUrl": "https://res.cloudinary.com/allzin/image/upload/c_fill,ar_1:1,w_300,f_auto/v1786111975/product/images/qmxmrbpna1bg45mch9j3.jpg"
+        }
+      ]
+    }
+  ]
+}

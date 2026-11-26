@@ -211,9 +211,11 @@ model CustomerAddress {
   neighborhood String
   fullAddress  String
   directions   String?
+  isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
 
   @@index([userId])
+  @@index([userId, isActive])
 }
 
 model Order {

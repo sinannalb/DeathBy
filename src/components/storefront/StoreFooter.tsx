@@ -16,9 +16,6 @@ export function StoreFooter() {
                 <span className="font-serif font-bold text-lg text-[#FAF6F1]">
                   Death By Chocolate
                 </span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-[#D4A048]">
-                  İstanbul
-                </span>
               </div>
               <p className="text-xs text-[#A89286] max-w-md">
                 Gerçek Belçika çikolatası, taze hamur ve özenle demlenen
@@ -49,12 +46,6 @@ export function StoreFooter() {
             >
               İptal ve İade Koşulları
             </Link>
-            <a
-              href="/panel/giris"
-              className="text-[#8A6F62] hover:text-[#D4A048] transition-colors"
-            >
-              Şube &amp; Yönetim Paneli
-            </a>
           </nav>
         </div>
 

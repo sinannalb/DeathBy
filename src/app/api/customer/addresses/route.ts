@@ -17,12 +17,51 @@ export async function GET() {
   const auth = await requireCustomerSession();
   if (auth.response) return auth.response;
 
-  const addresses = await prisma.customerAddress.findMany({
-    where: { userId: auth.session.userId },
+  let addresses = await prisma.customerAddress.findMany({
+    where: { userId: auth.session.userId, isActive: true },
     orderBy: { createdAt: "desc" },
   });
 
+  // If the customer has no active saved address yet but has past orders, backfill from their latest order
+  if (addresses.length === 0) {
+    const latestOrder = await prisma.order.findFirst({
+      where: { userId: auth.session.userId },
+      orderBy: { createdAt: "desc" },
+      select: {
+        city: true,
+        district: true,
+        neighborhood: true,
+        fullAddress: true,
+        directions: true,
+      },
+    });
+    if (latestOrder) {
+      const created = await prisma.customerAddress.create({
+        data: {
+          userId: auth.session.userId,
+          title: "Sipariş Adresim",
+          city: latestOrder.city,
+          district: latestOrder.district,
+          neighborhood: latestOrder.neighborhood,
+          fullAddress: latestOrder.fullAddress,
+          directions: latestOrder.directions,
+          isActive: true,
+        },
+      });
+      addresses = [created];
+    }
+  }
+
+  const activeOrdersCount = await prisma.order.count({
+    where: {
+      userId: auth.session.userId,
+      status: { notIn: ["COMPLETED", "CANCELLED"] },
+      paymentStatus: { not: "FAILED" },
+    },
+  });
+
   return NextResponse.json({
+    hasActiveOrder: activeOrdersCount > 0,
     addresses: addresses.map((a) => ({
       id: a.id,
       userId: a.userId,

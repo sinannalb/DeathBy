@@ -16,9 +16,11 @@ export function ProductImage({
   priority = false,
 }: ProductImageProps) {
   const [failed, setFailed] = useState(false);
+  const [retried, setRetried] = useState(false);
 
   useEffect(() => {
     setFailed(false);
+    setRetried(false);
   }, [src]);
 
   if (!src || failed) {
@@ -41,11 +43,18 @@ export function ProductImage({
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
+      key={retried ? `${src}-retry` : src}
       src={src}
       alt={alt}
       loading={priority ? "eager" : "lazy"}
       fetchPriority={priority ? "high" : "auto"}
-      onError={() => setFailed(true)}
+      onError={() => {
+        if (!retried) {
+          setRetried(true);
+        } else {
+          setFailed(true);
+        }
+      }}
       className={className}
     />
   );

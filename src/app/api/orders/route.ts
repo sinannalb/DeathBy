@@ -287,6 +287,25 @@ export async function POST(request: Request) {
       });
     }
 
+    // Ensure every customer who places an order has at least 1 active saved address
+    const activeAddressCount = await tx.customerAddress.count({
+      where: { userId: auth.session.userId, isActive: true },
+    });
+    if (activeAddressCount === 0) {
+      await tx.customerAddress.create({
+        data: {
+          userId: auth.session.userId,
+          title: "Sipariş Adresim",
+          city: deliveryNeighborhood.city,
+          district: deliveryNeighborhood.district,
+          neighborhood: deliveryNeighborhood.neighborhood,
+          fullAddress: data.fullAddress,
+          directions: data.directions || null,
+          isActive: true,
+        },
+      });
+    }
+
     return tx.order.create({
       data: {
         orderNumber,

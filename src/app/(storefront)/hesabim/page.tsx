@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ChevronRight,
+  Edit3,
+  Lock,
   LogOut,
   MapPin,
   Plus,
@@ -46,10 +48,12 @@ export default function CustomerAccountPage() {
   } = useStore();
 
   const [addresses, setAddresses] = useState<CustomerAddressDTO[]>([]);
+  const [hasActiveOrder, setHasActiveOrder] = useState(false);
   const [orders, setOrders] = useState<OrderDTO[]>([]);
   const [dataLoading, setDataLoading] = useState(false);
 
   const [showAddAddress, setShowAddAddress] = useState(false);
+  const [editingAddressId, setEditingAddressId] = useState<string | null>(null);
   const [addrTitle, setAddrTitle] = useState("");
   const [addrDistrict, setAddrDistrict] = useState("");
   const [addrNeighborhoodId, setAddrNeighborhoodId] = useState("");
@@ -77,12 +81,27 @@ export default function CustomerAccountPage() {
       if (addrRes.ok) {
         const addrData = (await addrRes.json()) as {
           addresses?: CustomerAddressDTO[];
+          hasActiveOrder?: boolean;
         };
         setAddresses(addrData.addresses ?? []);
+        if (typeof addrData.hasActiveOrder === "boolean") {
+          setHasActiveOrder(addrData.hasActiveOrder);
+        }
       }
       if (ordRes.ok) {
         const ordData = (await ordRes.json()) as { orders?: OrderDTO[] };
-        setOrders(ordData.orders ?? []);
+        const fetchedOrders = ordData.orders ?? [];
+        setOrders(fetchedOrders);
+        if (
+          fetchedOrders.some(
+            (o) =>
+              o.status !== "COMPLETED" &&
+              o.status !== "CANCELLED" &&
+              o.paymentStatus !== "FAILED",
+          )
+        ) {
+          setHasActiveOrder(true);
+        }
       }
     } finally {
       setDataLoading(false);
@@ -124,14 +143,56 @@ export default function CustomerAccountPage() {
     }
   }, [filteredDistrictNeighborhoods, addrNeighborhoodId]);
 
-  async function handleAddAddress(e: React.FormEvent) {
+  function openNewAddressForm() {
+    setEditingAddressId(null);
+    setAddrTitle("");
+    setAddrFull("");
+    setAddrDirections("");
+    if (uniqueDistricts.length > 0) {
+      setAddrDistrict(uniqueDistricts[0]);
+    }
+    setShowAddAddress(true);
+  }
+
+  function openEditAddressForm(addr: CustomerAddressDTO) {
+    if (hasActiveOrder) {
+      showToast(
+        "Aktif siparişiniz bulunduğu için tüm siparişleriniz tamamlandıktan sonra adresinizi güncelleyebilirsiniz.",
+        "error",
+      );
+      return;
+    }
+    setEditingAddressId(addr.id);
+    setAddrTitle(addr.title);
+    setAddrFull(addr.fullAddress);
+    setAddrDirections(addr.directions || "");
+    const matchedNb = courierNeighborhoods.find(
+      (n) =>
+        normalizeTrText(n.district) === normalizeTrText(addr.district) &&
+        normalizeTrText(n.neighborhood) === normalizeTrText(addr.neighborhood),
+    );
+    if (matchedNb) {
+      setAddrDistrict(matchedNb.district);
+      setAddrNeighborhoodId(matchedNb.id);
+    } else if (uniqueDistricts.includes(addr.district)) {
+      setAddrDistrict(addr.district);
+    }
+    setShowAddAddress(true);
+  }
+
+  async function handleSaveAddress(e: React.FormEvent) {
     e.preventDefault();
     const chosen = neighborhoods.find((n) => n.id === addrNeighborhoodId);
     if (!chosen) return;
     setSavingAddr(true);
     try {
-      const res = await fetch("/api/customer/addresses", {
-        method: "POST",
+      const url = editingAddressId
+        ? `/api/customer/addresses/${encodeURIComponent(editingAddressId)}`
+        : "/api/customer/addresses";
+      const method = editingAddressId ? "PATCH" : "POST";
+
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: addrTitle.trim(),
@@ -150,12 +211,20 @@ export default function CustomerAccountPage() {
         showToast(data.error || "Adres kaydedilemedi.", "error");
         return;
       }
-      setAddresses((prev) => [data.address!, ...prev]);
+      if (editingAddressId) {
+        setAddresses((prev) =>
+          prev.map((a) => (a.id === editingAddressId ? data.address! : a)),
+        );
+        showToast("Adresiniz güncellendi.", "success");
+      } else {
+        setAddresses((prev) => [data.address!, ...prev]);
+        showToast("Adresiniz kaydedildi.", "success");
+      }
+      setEditingAddressId(null);
       setAddrTitle("");
       setAddrFull("");
       setAddrDirections("");
       setShowAddAddress(false);
-      showToast("Adresiniz kaydedildi.", "success");
     } catch {
       showToast("Bağlantı hatası.", "error");
     } finally {
@@ -164,16 +233,28 @@ export default function CustomerAccountPage() {
   }
 
   async function handleDeleteAddress(id: string) {
+    if (addresses.length <= 1) {
+      showToast(
+        "En az 1 kayıtlı adresiniz bulunmalıdır. Silmek için önce yeni bir adres ekleyin.",
+        "error",
+      );
+      return;
+    }
     try {
       const res = await fetch(`/api/customer/addresses/${encodeURIComponent(id)}`, {
         method: "DELETE",
       });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) {
-        showToast("Adres silinemedi.", "error");
+        showToast(data.error || "Adres silinemedi.", "error");
         return;
       }
       setAddresses((prev) => prev.filter((a) => a.id !== id));
-      showToast("Adres silindi.", "info");
+      if (editingAddressId === id) {
+        setEditingAddressId(null);
+        setShowAddAddress(false);
+      }
+      showToast("Adres kaldırıldı.", "info");
     } catch {
       showToast("Bağlantı hatası.", "error");
     }
@@ -313,7 +394,14 @@ export default function CustomerAccountPage() {
             </h2>
             <button
               type="button"
-              onClick={() => setShowAddAddress((v) => !v)}
+              onClick={() => {
+                if (showAddAddress) {
+                  setShowAddAddress(false);
+                  setEditingAddressId(null);
+                } else {
+                  openNewAddressForm();
+                }
+              }}
               className="inline-flex items-center gap-1 rounded-xl bg-[#FDF4E7] border border-[#C68B3C]/40 hover:bg-[#F5E6D0] text-[#7A4F14] text-xs font-bold px-3 py-1.5 cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
@@ -321,11 +409,25 @@ export default function CustomerAccountPage() {
             </button>
           </div>
 
+          {hasActiveOrder && addresses.length > 0 && (
+            <div className="flex items-start gap-2 rounded-xl border border-[#C68B3C]/35 bg-[#FDF4E7] px-3 py-2 text-[11px] text-[#7A4F14]">
+              <Lock className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+              <span>
+                Aktif siparişiniz bulunduğu için mevcut adresler yalnızca tüm
+                siparişleriniz <strong>Tamamlandı</strong> durumuna geçtikten
+                sonra düzenlenebilir.
+              </span>
+            </div>
+          )}
+
           {showAddAddress && (
             <form
-              onSubmit={handleAddAddress}
+              onSubmit={handleSaveAddress}
               className="rounded-2xl border border-[#DFD2C3] bg-[#FBF6F0] p-4 space-y-3"
             >
+              <p className="text-xs font-bold text-[#1D110C]">
+                {editingAddressId ? "Adresi Düzenle" : "Yeni Adres Ekle"}
+              </p>
               <div>
                 <label
                   htmlFor="addr-title"
@@ -437,7 +539,11 @@ export default function CustomerAccountPage() {
                 disabled={savingAddr}
                 className="w-full rounded-xl bg-[#2C1A12] hover:bg-[#1D110C] text-[#FBF6F0] text-xs font-semibold py-2.5 cursor-pointer"
               >
-                {savingAddr ? "Kaydediliyor..." : "Adresi Kaydet"}
+                {savingAddr
+                  ? "Kaydediliyor..."
+                  : editingAddressId
+                    ? "Değişiklikleri Kaydet"
+                    : "Adresi Kaydet"}
               </button>
             </form>
           )}
@@ -466,18 +572,53 @@ export default function CustomerAccountPage() {
                         {addr.title}
                       </h3>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => void handleDeleteAddress(addr.id)}
-                      aria-label={`${addr.title} adresini sil`}
-                      className="text-[#9B8275] hover:text-[#9E2A2B] p-1 cursor-pointer"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        disabled={hasActiveOrder}
+                        onClick={() => openEditAddressForm(addr)}
+                        title={
+                          hasActiveOrder
+                            ? "Aktif siparişiniz tamamlandıktan sonra düzenlenebilir"
+                            : `${addr.title} adresini düzenle`
+                        }
+                        aria-label={`${addr.title} adresini düzenle`}
+                        className={`p-1 rounded-lg transition-colors ${
+                          hasActiveOrder
+                            ? "text-[#CBBBAE] cursor-not-allowed"
+                            : "text-[#7A6256] hover:text-[#1D110C] hover:bg-[#F5ECE0] cursor-pointer"
+                        }`}
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        disabled={addresses.length <= 1}
+                        onClick={() => void handleDeleteAddress(addr.id)}
+                        title={
+                          addresses.length <= 1
+                            ? "En az 1 kayıtlı adresiniz bulunmalıdır. Silmek için önce yeni bir adres ekleyin."
+                            : `${addr.title} adresini sil`
+                        }
+                        aria-label={`${addr.title} adresini sil`}
+                        className={`p-1 rounded-lg transition-colors ${
+                          addresses.length <= 1
+                            ? "text-[#CBBBAE] cursor-not-allowed"
+                            : "text-[#9B8275] hover:text-[#9E2A2B] hover:bg-[#9E2A2B]/10 cursor-pointer"
+                        }`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                   <p className="text-xs text-[#5C4338] leading-relaxed">
                     {addr.fullAddress}
                   </p>
+                  {addr.directions && (
+                    <p className="text-[11px] text-[#8A6F62]">
+                      Tarif: {addr.directions}
+                    </p>
+                  )}
                   <p className="text-[11px] text-[#8A6F62]">
                     {addr.neighborhood}, {addr.district} / {addr.city}
                   </p>

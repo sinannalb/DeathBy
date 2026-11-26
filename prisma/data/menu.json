@@ -21,21 +21,21 @@
           "imageUrl": "/products/death-by-white.jpg"
         },
         {
-          "name": "Death by crunch",
+          "name": "Death By Crunch",
           "slug": "death-by-crunch",
           "description": "",
           "priceTry": 375,
           "imageUrl": "/products/death-by-crunch.jpg"
         },
         {
-          "name": "Death by 3 çikolata",
+          "name": "Death By 3 Çikolata",
           "slug": "death-by-3-cikolata",
           "description": "",
           "priceTry": 375,
           "imageUrl": "/products/death-by-3-cikolata.jpg"
         },
         {
-          "name": "death by fındık",
+          "name": "Death By Fındık",
           "slug": "death-by-findik",
           "description": "treyağlı çıtır hamur fındık kreması ve oreo",
           "priceTry": 375,
@@ -56,21 +56,21 @@
           "imageUrl": "/products/kestane-tart.jpg"
         },
         {
-          "name": "death y raffaello",
+          "name": "Death By Raffaello",
           "slug": "death-y-raffaello",
           "description": "",
           "priceTry": 375,
           "imageUrl": "/products/death-y-raffaello.jpg"
         },
         {
-          "name": "DEATH BY DUBAİ",
+          "name": "Death By Dubai",
           "slug": "death-by-dubai",
           "description": "iki farklı bol çikolata tereyağlı çıtır fıstık sosu ve kaymaklı krema",
           "priceTry": 575,
           "imageUrl": "/products/death-by-dubai.jpg"
         },
         {
-          "name": "maraş usulü kesme dondurma",
+          "name": "Maraş Usulü Kesme Dondurma",
           "slug": "maras-usulu-kesme-dondurma",
           "description": "",
           "priceTry": 60,
@@ -106,7 +106,7 @@
       "sortOrder": 2,
       "products": [
         {
-          "name": "Mozorella Sandviç",
+          "name": "Mozzarella Sandviç",
           "slug": "mozorella-sandvic",
           "description": "tek parça panini ekmek, mozerella, pesto sos, domates",
           "priceTry": 300,
@@ -120,7 +120,7 @@
           "imageUrl": "/products/4-peynirli-sandvic.jpg"
         },
         {
-          "name": "Peynirli Haşhaşlı Sandivç",
+          "name": "Peynirli Haşhaşlı Sandviç",
           "slug": "peynirli-hashasli-sandivc",
           "description": "2 kat kaymak, eski kaşar, taze kaşar,",
           "priceTry": 300,
@@ -184,21 +184,21 @@
           "imageUrl": "/products/petite-banane.jpg"
         },
         {
-          "name": "mango pasta",
+          "name": "Mango Pasta",
           "slug": "mango-pasta",
           "description": "",
           "priceTry": 400,
           "imageUrl": "/products/mango-pasta.jpg"
         },
         {
-          "name": "blueberry pasta",
+          "name": "Blueberry Pasta",
           "slug": "blueberry-pasta",
           "description": "",
           "priceTry": 400,
           "imageUrl": "/products/blueberry-pasta.jpg"
         },
         {
-          "name": "cafe a la creme",
+          "name": "Cafe A La Creme",
           "slug": "cafe-a-la-creme",
           "description": "",
           "priceTry": 400,
@@ -334,42 +334,42 @@
       "sortOrder": 6,
       "products": [
         {
-          "name": "Bluberries cream puff",
+          "name": "Blueberries Cream Puff",
           "slug": "bluberries-cream-puff",
           "description": "",
           "priceTry": 250,
           "imageUrl": "/products/bluberries-cream-puff.jpg"
         },
         {
-          "name": "Lotuslu cream puff",
+          "name": "Lotuslu Cream Puff",
           "slug": "lotuslu-cream-puff",
           "description": "",
           "priceTry": 250,
           "imageUrl": "/products/lotuslu-cream-puff.jpg"
         },
         {
-          "name": "Krokanlı cream puff",
+          "name": "Krokanlı Cream Puff",
           "slug": "krokanli-cream-puff",
           "description": "",
           "priceTry": 250,
           "imageUrl": "/products/krokanli-cream-puff.jpg"
         },
         {
-          "name": "Pistachios cream puff",
+          "name": "Pistachios Cream Puff",
           "slug": "pistachios-cream-puff",
           "description": "",
           "priceTry": 250,
           "imageUrl": "/products/pistachios-cream-puff.jpg"
         },
         {
-          "name": "Marshmallow cream puff",
+          "name": "Marshmallow Cream Puff",
           "slug": "marshmallow-cream-puff",
           "description": "",
           "priceTry": 250,
           "imageUrl": "/products/marshmallow-cream-puff.jpg"
         },
         {
-          "name": "White chocolate cream puff",
+          "name": "White Chocolate Cream Puff",
           "slug": "white-chocolate-cream-puff",
           "description": "",
           "priceTry": 250,
@@ -406,14 +406,14 @@
           "imageUrl": "/products/beyaz-cikolatali-cilekli-pasta-mag.jpg"
         },
         {
-          "name": "Nutella-Çilek newyork Mag",
+          "name": "Nutella-Çilek New York Mag",
           "slug": "nutella-cilek-newyork-mag",
           "description": "Çilek, Cici Bebe, Nutella ve Amerikan Kreması",
           "priceTry": 300,
           "imageUrl": "/products/nutella-cilek-newyork-mag.jpg"
         },
         {
-          "name": "Nutella- Muz newyork Mag",
+          "name": "Nutella-Muz New York Mag",
           "slug": "nutella-muz-newyork-mag",
           "description": "Muz, Cici Bebe, Nutella ve Amerikan Kreması",
           "priceTry": 300,
@@ -493,28 +493,28 @@
       "sortOrder": 11,
       "products": [
         {
-          "name": "soda",
+          "name": "Soda",
           "slug": "soda",
           "description": "",
           "priceTry": 125,
           "imageUrl": "/products/soda.jpg"
         },
         {
-          "name": "coco cola normal",
+          "name": "Coca-Cola Normal",
           "slug": "coco-cola-normal",
           "description": "",
           "priceTry": 150,
           "imageUrl": "/products/coco-cola-normal.jpg"
         },
         {
-          "name": "cola zero",
+          "name": "Cola Zero",
           "slug": "cola-zero",
           "description": "",
           "priceTry": 150,
           "imageUrl": "/products/cola-zero.jpg"
         },
         {
-          "name": "SÜT",
+          "name": "Süt",
           "slug": "sut",
           "description": "",
           "priceTry": 125,
@@ -528,7 +528,7 @@
           "imageUrl": "/products/su.jpg"
         },
         {
-          "name": "churchill",
+          "name": "Churchill",
           "slug": "churchill",
           "description": "",
           "priceTry": 200,
@@ -550,7 +550,7 @@
           "imageUrl": "/products/americano.jpg"
         },
         {
-          "name": "Capuccino",
+          "name": "Cappuccino",
           "slug": "capuccino",
           "description": "",
           "priceTry": 200,
@@ -655,7 +655,7 @@
           "imageUrl": "/products/white-mocha.jpg"
         },
         {
-          "name": "double türk kahvesi",
+          "name": "Double Türk Kahvesi",
           "slug": "double-turk-kahvesi",
           "description": "",
           "priceTry": 300,
@@ -669,7 +669,7 @@
           "imageUrl": null
         },
         {
-          "name": "lotus latte",
+          "name": "Lotus Latte",
           "slug": "lotus-latte",
           "description": "",
           "priceTry": 200,
@@ -747,7 +747,7 @@
           "imageUrl": "/products/iced-mocha.jpg"
         },
         {
-          "name": "Iced Stawberry Latte",
+          "name": "Iced Strawberry Latte",
           "slug": "iced-stawberry-latte",
           "description": "",
           "priceTry": 220,
@@ -782,7 +782,7 @@
           "imageUrl": null
         },
         {
-          "name": "ıced lotus latte",
+          "name": "Iced Lotus Latte",
           "slug": "iced-lotus-latte",
           "description": "",
           "priceTry": 220,
@@ -953,7 +953,7 @@
           "imageUrl": "/products/frappe-karamel.jpg"
         },
         {
-          "name": "Frappe Stawberry",
+          "name": "Frappe Strawberry",
           "slug": "frappe-stawberry",
           "description": "",
           "priceTry": 250,
@@ -974,7 +974,7 @@
           "imageUrl": "/products/frappe-white-chocolate.jpg"
         },
         {
-          "name": "lotus frappe",
+          "name": "Lotus Frappe",
           "slug": "lotus-frappe",
           "description": "",
           "priceTry": 250,
@@ -1110,7 +1110,7 @@
           "imageUrl": "/products/ice-tea-red.jpg"
         },
         {
-          "name": "ıce Tea Şeftali",
+          "name": "Ice Tea Şeftali",
           "slug": "ice-tea-seftali",
           "description": "",
           "priceTry": 200,

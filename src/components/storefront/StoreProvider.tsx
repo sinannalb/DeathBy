@@ -37,6 +37,13 @@ interface AddToCartInput {
   selectedOptions: SelectedOptionSnapshot[];
 }
 
+export interface BranchAdjustmentInfo {
+  previousBranchName: string;
+  newBranchName: string;
+  removedItems: string[];
+  keptItems: string[];
+}
+
 interface StoreContextValue {
   hydrated: boolean;
   cart: CartItem[];
@@ -53,9 +60,15 @@ interface StoreContextValue {
     neighborhood: StoredNeighborhood,
     options?: { clearOutOfService?: boolean; silent?: boolean },
   ) => void;
+  applyNeighborhoodWithCartCheck: (
+    neighborhood: StoredNeighborhood,
+    options?: { clearOutOfService?: boolean; silent?: boolean },
+  ) => Promise<{ removedCount: number; keptCount: number }>;
   clearSelectedNeighborhood: () => void;
   outOfServiceMessage: string | null;
   setOutOfServiceMessage: (msg: string | null) => void;
+  branchAdjustment: BranchAdjustmentInfo | null;
+  dismissBranchAdjustment: () => void;
 
   neighborhoods: NeighborhoodWithBranch[];
   branches: BranchSummaryDTO[];
@@ -117,6 +130,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [neighborhoodModalOpen, setNeighborhoodModalOpen] = useState(false);
   const [otpModalOpen, setOtpModalOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [branchAdjustment, setBranchAdjustment] =
+    useState<BranchAdjustmentInfo | null>(null);
+
+  const cartRef = useRef<CartItem[]>(cart);
+  cartRef.current = cart;
+  const selectedNeighborhoodRef = useRef<StoredNeighborhood | null>(
+    selectedNeighborhood,
+  );
+  selectedNeighborhoodRef.current = selectedNeighborhood;
+
+  const dismissBranchAdjustment = useCallback(() => {
+    setBranchAdjustment(null);
+  }, []);
 
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const toastCounter = useRef(0);
@@ -314,32 +340,95 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     neighborhoods,
   ]);
 
+  const applyNeighborhoodWithCartCheck = useCallback(
+    async (
+      next: StoredNeighborhood,
+      options?: { clearOutOfService?: boolean; silent?: boolean },
+    ): Promise<{ removedCount: number; keptCount: number }> => {
+      const prev = selectedNeighborhoodRef.current;
+      const currentCart = cartRef.current;
+
+      setSelectedNeighborhoodState(next);
+      if (options?.clearOutOfService !== false) {
+        setOutOfServiceMessage(null);
+      }
+
+      if (!prev || prev.branch.id === next.branch.id || currentCart.length === 0) {
+        return { removedCount: 0, keptCount: currentCart.length };
+      }
+
+      try {
+        const res = await fetch(
+          `/api/menu?branchId=${encodeURIComponent(next.branch.id)}`,
+          { cache: "no-store" },
+        );
+        if (!res.ok) {
+          return { removedCount: 0, keptCount: currentCart.length };
+        }
+        const data = (await res.json()) as {
+          categories?: Array<{
+            products: Array<{
+              id: string;
+              branchAvailable: boolean;
+            }>;
+          }>;
+        };
+        const availableIds = new Set<string>();
+        for (const cat of data.categories ?? []) {
+          for (const prod of cat.products) {
+            if (prod.branchAvailable) {
+              availableIds.add(prod.id);
+            }
+          }
+        }
+
+        const kept: CartItem[] = [];
+        const removedNames: string[] = [];
+        const keptNames: string[] = [];
+
+        for (const item of currentCart) {
+          if (availableIds.has(item.productId)) {
+            kept.push(item);
+            keptNames.push(item.productName);
+          } else {
+            removedNames.push(item.productName);
+          }
+        }
+
+        if (removedNames.length > 0) {
+          setCart(kept);
+          setBranchAdjustment({
+            previousBranchName: prev.branch.name,
+            newBranchName: next.branch.name,
+            removedItems: removedNames,
+            keptItems: keptNames,
+          });
+        } else if (!options?.silent) {
+          showToast(
+            `Teslimat şubesi ${next.branch.name} olarak güncellendi.`,
+            "info",
+          );
+        }
+
+        return {
+          removedCount: removedNames.length,
+          keptCount: kept.length,
+        };
+      } catch {
+        return { removedCount: 0, keptCount: currentCart.length };
+      }
+    },
+    [showToast],
+  );
+
   const setSelectedNeighborhood = useCallback(
     (
       next: StoredNeighborhood,
       options?: { clearOutOfService?: boolean; silent?: boolean },
     ) => {
-      setSelectedNeighborhoodState((prev) => {
-        if (
-          prev &&
-          prev.branch.id !== next.branch.id &&
-          cart.length > 0
-        ) {
-          setCart([]);
-          if (!options?.silent) {
-            showToast(
-              `Şube değiştiği için sepetiniz ${next.branch.name} için sıfırlandı.`,
-              "info",
-            );
-          }
-        }
-        return next;
-      });
-      if (options?.clearOutOfService !== false) {
-        setOutOfServiceMessage(null);
-      }
+      void applyNeighborhoodWithCartCheck(next, options);
     },
-    [cart.length, showToast],
+    [applyNeighborhoodWithCartCheck],
   );
 
   const clearSelectedNeighborhood = useCallback(() => {
@@ -464,9 +553,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       applyReorderItems,
       selectedNeighborhood,
       setSelectedNeighborhood,
+      applyNeighborhoodWithCartCheck,
       clearSelectedNeighborhood,
       outOfServiceMessage,
       setOutOfServiceMessage,
+      branchAdjustment,
+      dismissBranchAdjustment,
       neighborhoods,
       branches,
       neighborhoodsLoading,
@@ -498,8 +590,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       applyReorderItems,
       selectedNeighborhood,
       setSelectedNeighborhood,
+      applyNeighborhoodWithCartCheck,
       clearSelectedNeighborhood,
       outOfServiceMessage,
+      branchAdjustment,
+      dismissBranchAdjustment,
       neighborhoods,
       branches,
       neighborhoodsLoading,

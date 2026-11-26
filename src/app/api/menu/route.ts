@@ -30,7 +30,6 @@ export async function GET(request: Request) {
     orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
     include: {
       products: {
-        where: { isActive: true },
         orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
         include: {
           branchAvailabilities: {
@@ -64,7 +63,7 @@ export async function GET(request: Request) {
     isActive: cat.isActive,
     products: cat.products.map((prod) => {
       const avail = prod.branchAvailabilities[0];
-      const branchAvailable = avail ? avail.isAvailable : true;
+      const branchAvailable = prod.isActive && (avail ? avail.isAvailable : true);
 
       return {
         id: prod.id,

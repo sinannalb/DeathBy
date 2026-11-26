@@ -572,7 +572,7 @@ export function MenuBrowser() {
                       branchStatus?.canAcceptOrders === false;
 
                     let buttonLabel = "Sepete Ekle";
-                    if (soldOut) buttonLabel = "Şubede Tükendi";
+                    if (soldOut) buttonLabel = "Şu an temin edilememektedir";
                     else if (!selectedNeighborhood || outOfServiceMessage)
                       buttonLabel = "Mahalle Seçin";
                     else if (branchStatus?.canAcceptOrders === false)
@@ -636,7 +636,7 @@ export function MenuBrowser() {
 
                             {soldOut && (
                               <span className="inline-block mt-1 rounded-full bg-[#9E2A2B]/15 text-[#9E2A2B] text-[10px] font-bold px-2 py-0.5">
-                                Şubede Tükendi
+                                Şu an temin edilememektedir
                               </span>
                             )}
 
@@ -776,7 +776,7 @@ export function MenuBrowser() {
                     Boolean(outOfServiceMessage) ||
                     branchStatus?.canAcceptOrders === false;
                   let btnLabel = "Sepete Ekle";
-                  if (soldOut) btnLabel = "Şubede Tükendi";
+                  if (soldOut) btnLabel = "Şu an temin edilememektedir";
                   else if (!selectedNeighborhood || outOfServiceMessage)
                     btnLabel = "Mahalle Seçin";
                   else if (branchStatus?.canAcceptOrders === false)

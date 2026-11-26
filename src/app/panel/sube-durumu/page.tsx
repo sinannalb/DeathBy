@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { ConfirmDialog } from "@/components/panel/ConfirmDialog";
 import { usePanelAuth } from "@/components/panel/PanelAuthContext";
+import { QrMenuCard } from "@/components/panel/QrMenuCard";
 import {
   apiFetch,
   formatDateTimeTR,
@@ -1347,6 +1348,12 @@ export default function BranchStatusPage() {
           </div>
         </section>
       )}
+
+      {/* QR Menu & Downloadable QR Code */}
+      <QrMenuCard
+        branchName={currentBranch.name}
+        branchSlug={currentBranch.slug}
+      />
 
       {/* Update Existing Neighborhood Confirmation */}
       <ConfirmDialog

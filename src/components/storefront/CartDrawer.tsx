@@ -31,6 +31,7 @@ export function CartDrawer() {
     neighborhoods,
     selectedNeighborhood,
     setSelectedNeighborhood,
+    applyNeighborhoodWithCartCheck,
     setNeighborhoodModalOpen,
     cartDrawerOpen,
     setCartDrawerOpen,
@@ -60,6 +61,7 @@ export function CartDrawer() {
   const [checkoutNeighborhoodId, setCheckoutNeighborhoodId] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
+  const [savingNewAddress, setSavingNewAddress] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -255,10 +257,22 @@ export function CartDrawer() {
     [addresses, courierNeighborhoods],
   );
 
+  const draftNeighborhood = useMemo(() => {
+    const chosen =
+      courierNeighborhoods.find((n) => n.id === checkoutNeighborhoodId) ??
+      checkoutNeighborhoods[0];
+    return chosen ? toStoredNeighborhood(chosen) : null;
+  }, [courierNeighborhoods, checkoutNeighborhoodId, checkoutNeighborhoods]);
+
+  const activeCheckoutNeighborhood =
+    selectedAddressId === "new"
+      ? (draftNeighborhood ?? selectedNeighborhood)
+      : selectedNeighborhood;
+
   if (!cartDrawerOpen) return null;
 
-  const minOrderAmount = selectedNeighborhood?.minOrderAmount ?? 0;
-  const deliveryFee = selectedNeighborhood?.deliveryFee ?? 0;
+  const minOrderAmount = activeCheckoutNeighborhood?.minOrderAmount ?? 0;
+  const deliveryFee = activeCheckoutNeighborhood?.deliveryFee ?? 0;
   const totalAmount = Number((cartSubtotal + deliveryFee).toFixed(2));
   const missingAmount = Math.max(
     0,
@@ -329,9 +343,56 @@ export function CartDrawer() {
     setSubmitError(null);
   }
 
+  async function handleSaveAndSelectNewAddress() {
+    const targetNb = draftNeighborhood;
+    if (!targetNb) {
+      setSubmitError("Lütfen ilçe ve mahalle seçiniz.");
+      return;
+    }
+    if (fullAddress.trim().length < 5) {
+      setSubmitError("Lütfen en az 5 karakterlik açık adres giriniz.");
+      return;
+    }
+    setSubmitError(null);
+    setSavingNewAddress(true);
+    try {
+      const res = await fetch("/api/customer/addresses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: addressTitle.trim() || "Adresim",
+          city: targetNb.city,
+          district: targetNb.district,
+          neighborhood: targetNb.neighborhood,
+          fullAddress: fullAddress.trim(),
+          directions: directions.trim() || null,
+        }),
+      });
+      const data = (await res.json()) as {
+        address?: CustomerAddressDTO;
+        error?: string;
+      };
+      if (!res.ok || !data.address) {
+        setSubmitError(data.error || "Adres kaydedilemedi.");
+        return;
+      }
+
+      setAddresses((prev) => [data.address!, ...prev]);
+      setSelectedAddressId(data.address.id);
+      setFullAddress(data.address.fullAddress);
+      setDirections(data.address.directions || "");
+      await applyNeighborhoodWithCartCheck(targetNb, { silent: false });
+    } catch {
+      setSubmitError("Adres kaydedilirken bağlantı hatası oluştu.");
+    } finally {
+      setSavingNewAddress(false);
+    }
+  }
+
   async function handleSubmitOrder(e: React.FormEvent) {
     e.preventDefault();
-    if (!selectedNeighborhood) {
+    const targetNeighborhood = activeCheckoutNeighborhood;
+    if (!targetNeighborhood) {
       setSubmitError("Lütfen önce teslimat mahallenizi seçin.");
       return;
     }
@@ -360,29 +421,60 @@ export function CartDrawer() {
         saveAddress &&
         (selectedAddressId === "new" || selectedAddressId === "last-order")
       ) {
-        await fetch("/api/customer/addresses", {
+        const addrRes = await fetch("/api/customer/addresses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             title: addressTitle.trim() || "Adresim",
-            city: selectedNeighborhood.city,
-            district: selectedNeighborhood.district,
-            neighborhood: selectedNeighborhood.neighborhood,
+            city: targetNeighborhood.city,
+            district: targetNeighborhood.district,
+            neighborhood: targetNeighborhood.neighborhood,
             fullAddress: fullAddress.trim(),
             directions: directions.trim() || null,
           }),
         }).catch(() => undefined);
+        if (addrRes?.ok) {
+          const addrData = (await addrRes.json().catch(() => ({}))) as {
+            address?: CustomerAddressDTO;
+          };
+          if (addrData.address) {
+            setAddresses((prev) => [addrData.address!, ...prev]);
+            setSelectedAddressId(addrData.address.id);
+          }
+        }
+      }
+
+      // If switching to a different branch via new address, reconcile cart first and pause if items were removed
+      if (
+        selectedNeighborhood &&
+        selectedNeighborhood.branch.id !== targetNeighborhood.branch.id
+      ) {
+        const { removedCount } = await applyNeighborhoodWithCartCheck(
+          targetNeighborhood,
+          { silent: true },
+        );
+        if (removedCount > 0) {
+          setSubmitting(false);
+          return;
+        }
+      } else if (
+        !selectedNeighborhood ||
+        selectedNeighborhood.neighborhoodId !== targetNeighborhood.neighborhoodId
+      ) {
+        await applyNeighborhoodWithCartCheck(targetNeighborhood, {
+          silent: true,
+        });
       }
 
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          branchId: selectedNeighborhood.branch.id,
-          neighborhoodId: selectedNeighborhood.neighborhoodId,
-          city: selectedNeighborhood.city,
-          district: selectedNeighborhood.district,
-          neighborhood: selectedNeighborhood.neighborhood,
+          branchId: targetNeighborhood.branch.id,
+          neighborhoodId: targetNeighborhood.neighborhoodId,
+          city: targetNeighborhood.city,
+          district: targetNeighborhood.district,
+          neighborhood: targetNeighborhood.neighborhood,
           fullAddress: fullAddress.trim(),
           directions: directions.trim() || null,
           customerName: resolvedCustomerName,
@@ -826,13 +918,6 @@ export function CartDrawer() {
                             );
                             if (firstNb) {
                               setCheckoutNeighborhoodId(firstNb.id);
-                              setSelectedNeighborhood(
-                                toStoredNeighborhood(firstNb),
-                                { silent: true },
-                              );
-                              setSelectedAddressId("new");
-                              setFullAddress("");
-                              setDirections("");
                             }
                           }}
                           className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
@@ -862,18 +947,6 @@ export function CartDrawer() {
                           onChange={(e) => {
                             const nextId = e.target.value;
                             setCheckoutNeighborhoodId(nextId);
-                            const chosen = courierNeighborhoods.find(
-                              (n) => n.id === nextId,
-                            );
-                            if (chosen) {
-                              setSelectedNeighborhood(
-                                toStoredNeighborhood(chosen),
-                                { silent: true },
-                              );
-                              setSelectedAddressId("new");
-                              setFullAddress("");
-                              setDirections("");
-                            }
                           }}
                           className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
                         >
@@ -961,24 +1034,40 @@ export function CartDrawer() {
                         className="w-full rounded-lg border border-[#DFD2C3] bg-white px-3 py-1.5 text-xs text-[#1D110C]"
                       />
                     )}
+                    <button
+                      type="button"
+                      disabled={savingNewAddress}
+                      onClick={() => void handleSaveAndSelectNewAddress()}
+                      className="w-full rounded-lg border border-[#C68B3C] bg-[#FDF4E7] hover:bg-[#F5E6D0] text-[#7A4F14] font-bold text-xs py-2 px-3 transition-colors cursor-pointer disabled:opacity-50"
+                    >
+                      {savingNewAddress
+                        ? "Adres Ekleniyor..."
+                        : "Adresi Ekle ve Seç"}
+                    </button>
                   </div>
                 )}
 
-                {selectedNeighborhood && (
+                {activeCheckoutNeighborhood && (
                   <div className="rounded-2xl border border-[#E6D9CB] bg-[#FAF6F1] p-3.5 flex items-start justify-between gap-3 text-xs">
                     <div className="flex items-start gap-2.5 min-w-0">
                       <Store className="w-4 h-4 text-[#B6822E] shrink-0 mt-0.5" />
                       <div className="min-w-0">
                         <p className="font-bold text-[#120D0C]">
-                          Teslimat Şubesi: {selectedNeighborhood.branch.name}
+                          Teslimat Şubesi: {activeCheckoutNeighborhood.branch.name}
                         </p>
                         <p className="text-[#6E5245] mt-0.5">
-                          {selectedNeighborhood.neighborhood},{" "}
-                          {selectedNeighborhood.district} /{" "}
-                          {selectedNeighborhood.city} •{" "}
-                          {selectedNeighborhood.branch.status.estimatedMinMinutes}
+                          {activeCheckoutNeighborhood.neighborhood},{" "}
+                          {activeCheckoutNeighborhood.district} /{" "}
+                          {activeCheckoutNeighborhood.city} •{" "}
+                          {
+                            activeCheckoutNeighborhood.branch.status
+                              .estimatedMinMinutes
+                          }
                           -
-                          {selectedNeighborhood.branch.status.estimatedMaxMinutes}{" "}
+                          {
+                            activeCheckoutNeighborhood.branch.status
+                              .estimatedMaxMinutes
+                          }{" "}
                           dk
                         </p>
                       </div>

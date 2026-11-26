@@ -1,3 +1,4 @@
+import { BranchAdjustmentModal } from "@/components/storefront/BranchAdjustmentModal";
 import { CartDrawer } from "@/components/storefront/CartDrawer";
 import { NeighborhoodModal } from "@/components/storefront/NeighborhoodModal";
 import { OtpLoginModal } from "@/components/storefront/OtpLoginModal";
@@ -20,6 +21,7 @@ export default function StorefrontLayout({
         <NeighborhoodModal />
         <OtpLoginModal />
         <CartDrawer />
+        <BranchAdjustmentModal />
         <ToastStack />
       </div>
     </StoreProvider>

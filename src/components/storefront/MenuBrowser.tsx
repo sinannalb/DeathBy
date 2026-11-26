@@ -546,20 +546,18 @@ export function MenuBrowser() {
                   {category.products.map((product, prodIdx) => {
                     const soldOut = !product.branchAvailable;
                     const inCartQty = cartQtyByProduct.get(product.id) ?? 0;
-                    const hasOptions = product.optionGroups.length > 0;
                     const disabled =
                       soldOut ||
                       !selectedNeighborhood ||
                       Boolean(outOfServiceMessage) ||
                       branchStatus?.canAcceptOrders === false;
 
-                    let buttonLabel = "+ Sepete Ekle";
+                    let buttonLabel = "Sepete Ekle";
                     if (soldOut) buttonLabel = "Şubede Tükendi";
                     else if (!selectedNeighborhood || outOfServiceMessage)
                       buttonLabel = "Mahalle Seçin";
                     else if (branchStatus?.canAcceptOrders === false)
                       buttonLabel = "Şube Kapalı";
-                    else if (hasOptions) buttonLabel = "+ Seç & Ekle";
 
                     return (
                       <article
@@ -626,7 +624,7 @@ export function MenuBrowser() {
                                   : "bg-[#2C1A12] hover:bg-[#1D110C] text-[#FBF6F0] cursor-pointer shadow-xs"
                               }`}
                             >
-                              {!disabled && !hasOptions && (
+                              {!disabled && (
                                 <Plus className="w-3.5 h-3.5 text-[#C68B3C]" />
                               )}
                               <span>{buttonLabel}</span>

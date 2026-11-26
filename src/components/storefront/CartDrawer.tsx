@@ -277,6 +277,12 @@ export function CartDrawer() {
     cart.length > 0 &&
     missingAmount === 0;
 
+  const hasSavedCustomerName = Boolean(
+    customer?.name &&
+      customer.name.trim().length >= 2 &&
+      customer.name.trim() !== "Müşteri",
+  );
+
   function handleSelectSavedAddress(addr: CustomerAddressDTO) {
     const matchedNb = courierNeighborhoods.find(
       (n) =>
@@ -333,6 +339,13 @@ export function CartDrawer() {
       setSubmitError("Lütfen önce telefonunuzla giriş yapın.");
       return;
     }
+    const resolvedCustomerName =
+      customerName.trim() ||
+      (hasSavedCustomerName ? customer.name.trim() : "");
+    if (resolvedCustomerName.length < 2) {
+      setSubmitError("Lütfen ad soyad bilginizi giriniz.");
+      return;
+    }
     if (!fullAddress.trim()) {
       setSubmitError("Lütfen teslimat adresinizi seçin veya girin.");
       return;
@@ -372,7 +385,7 @@ export function CartDrawer() {
           neighborhood: selectedNeighborhood.neighborhood,
           fullAddress: fullAddress.trim(),
           directions: directions.trim() || null,
-          customerName: customerName.trim(),
+          customerName: resolvedCustomerName,
           note: note.trim() || null,
           items: cart.map((item) => ({
             productId: item.productId,
@@ -770,24 +783,26 @@ export function CartDrawer() {
                   )
                 )}
 
-                <div>
-                  <label
-                    htmlFor="checkout-name"
-                    className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
-                  >
-                    Ad Soyad *
-                  </label>
-                  <input
-                    id="checkout-name"
-                    type="text"
-                    required
-                    minLength={2}
-                    placeholder="Örn. Zeynep Kaya"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3.5 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
-                  />
-                </div>
+                {!hasSavedCustomerName && (
+                  <div>
+                    <label
+                      htmlFor="checkout-name"
+                      className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
+                    >
+                      Ad Soyad *
+                    </label>
+                    <input
+                      id="checkout-name"
+                      type="text"
+                      required
+                      minLength={2}
+                      placeholder="Örn. Zeynep Kaya"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3.5 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
+                    />
+                  </div>
+                )}
 
                 {/* District, Neighborhood & Address Fields (shown only when entering a new address) */}
                 {!addressesLoading && selectedAddressId === "new" && (

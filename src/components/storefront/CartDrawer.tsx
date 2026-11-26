@@ -333,6 +333,10 @@ export function CartDrawer() {
       setSubmitError("Lütfen önce telefonunuzla giriş yapın.");
       return;
     }
+    if (!fullAddress.trim()) {
+      setSubmitError("Lütfen teslimat adresinizi seçin veya girin.");
+      return;
+    }
 
     setSubmitError(null);
     setSubmitting(true);
@@ -687,16 +691,29 @@ export function CartDrawer() {
                             }`}
                           >
                             <div className="flex items-center justify-between gap-2">
-                              <p className="font-bold text-[#1D110C]">
-                                {addr.title}
-                              </p>
-                              <span className="text-[11px] text-[#8A6F62]">
+                              <div className="flex items-center gap-1.5 min-w-0">
+                                <p className="font-bold text-[#1D110C] truncate">
+                                  {addr.title}
+                                </p>
+                                {selectedAddressId === addr.id && (
+                                  <span className="inline-flex items-center gap-0.5 text-[11px] font-semibold text-[#B0782D] shrink-0">
+                                    <CheckCircle2 className="w-3.5 h-3.5" />
+                                    Seçili
+                                  </span>
+                                )}
+                              </div>
+                              <span className="text-[11px] text-[#8A6F62] shrink-0">
                                 {addr.neighborhood}, {addr.district}
                               </span>
                             </div>
                             <p className="text-[#5C4338] mt-0.5">
                               {addr.fullAddress}
                             </p>
+                            {addr.directions && (
+                              <p className="text-[11px] text-[#8A6F62] mt-0.5">
+                                Tarif: {addr.directions}
+                              </p>
+                            )}
                           </button>
                         ))}
                         {servicedSavedAddresses.length === 0 &&
@@ -711,10 +728,18 @@ export function CartDrawer() {
                               }`}
                             >
                               <div className="flex items-center justify-between gap-2">
-                                <p className="font-bold text-[#1D110C]">
-                                  Son Sipariş Adresim
-                                </p>
-                                <span className="text-[11px] text-[#8A6F62]">
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                  <p className="font-bold text-[#1D110C] truncate">
+                                    Son Sipariş Adresim
+                                  </p>
+                                  {selectedAddressId === "last-order" && (
+                                    <span className="inline-flex items-center gap-0.5 text-[11px] font-semibold text-[#B0782D] shrink-0">
+                                      <CheckCircle2 className="w-3.5 h-3.5" />
+                                      Seçili
+                                    </span>
+                                  )}
+                                </div>
+                                <span className="text-[11px] text-[#8A6F62] shrink-0">
                                   {lastOrderAddress.neighborhood},{" "}
                                   {lastOrderAddress.district}
                                 </span>
@@ -722,6 +747,11 @@ export function CartDrawer() {
                               <p className="text-[#5C4338] mt-0.5">
                                 {lastOrderAddress.fullAddress}
                               </p>
+                              {lastOrderAddress.directions && (
+                                <p className="text-[11px] text-[#8A6F62] mt-0.5">
+                                  Tarif: {lastOrderAddress.directions}
+                                </p>
+                              )}
                             </button>
                           )}
                         <button
@@ -759,121 +789,125 @@ export function CartDrawer() {
                   />
                 </div>
 
-                {/* District & Neighborhood Selection inside Address Form */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div>
-                    <label
-                      htmlFor="checkout-district"
-                      className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
-                    >
-                      İlçe (İstanbul) *
-                    </label>
-                    <select
-                      id="checkout-district"
-                      value={checkoutDistrict || checkoutDistricts[0] || ""}
-                      onChange={(e) => {
-                        const nextDistrict = e.target.value;
-                        setCheckoutDistrict(nextDistrict);
-                        const firstNb = courierNeighborhoods.find(
-                          (n) => n.district === nextDistrict,
-                        );
-                        if (firstNb) {
-                          setCheckoutNeighborhoodId(firstNb.id);
-                          setSelectedNeighborhood(
-                            toStoredNeighborhood(firstNb),
-                            { silent: true },
-                          );
-                          setSelectedAddressId("new");
-                          setFullAddress("");
-                          setDirections("");
-                        }
-                      }}
-                      className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
-                    >
-                      {checkoutDistricts.map((dist) => (
-                        <option key={dist} value={dist}>
-                          {dist}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                {/* District, Neighborhood & Address Fields (shown only when entering a new address) */}
+                {!addressesLoading && selectedAddressId === "new" && (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      <div>
+                        <label
+                          htmlFor="checkout-district"
+                          className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
+                        >
+                          İlçe (İstanbul) *
+                        </label>
+                        <select
+                          id="checkout-district"
+                          value={checkoutDistrict || checkoutDistricts[0] || ""}
+                          onChange={(e) => {
+                            const nextDistrict = e.target.value;
+                            setCheckoutDistrict(nextDistrict);
+                            const firstNb = courierNeighborhoods.find(
+                              (n) => n.district === nextDistrict,
+                            );
+                            if (firstNb) {
+                              setCheckoutNeighborhoodId(firstNb.id);
+                              setSelectedNeighborhood(
+                                toStoredNeighborhood(firstNb),
+                                { silent: true },
+                              );
+                              setSelectedAddressId("new");
+                              setFullAddress("");
+                              setDirections("");
+                            }
+                          }}
+                          className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
+                        >
+                          {checkoutDistricts.map((dist) => (
+                            <option key={dist} value={dist}>
+                              {dist}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                  <div>
-                    <label
-                      htmlFor="checkout-neighborhood"
-                      className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
-                    >
-                      Mahalle *
-                    </label>
-                    <select
-                      id="checkout-neighborhood"
-                      value={
-                        checkoutNeighborhoodId ||
-                        checkoutNeighborhoods[0]?.id ||
-                        ""
-                      }
-                      onChange={(e) => {
-                        const nextId = e.target.value;
-                        setCheckoutNeighborhoodId(nextId);
-                        const chosen = courierNeighborhoods.find(
-                          (n) => n.id === nextId,
-                        );
-                        if (chosen) {
-                          setSelectedNeighborhood(
-                            toStoredNeighborhood(chosen),
-                            { silent: true },
-                          );
-                          setSelectedAddressId("new");
-                          setFullAddress("");
-                          setDirections("");
-                        }
-                      }}
-                      className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
-                    >
-                      {checkoutNeighborhoods.map((nb) => (
-                        <option key={nb.id} value={nb.id}>
-                          {nb.neighborhood}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                      <div>
+                        <label
+                          htmlFor="checkout-neighborhood"
+                          className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
+                        >
+                          Mahalle *
+                        </label>
+                        <select
+                          id="checkout-neighborhood"
+                          value={
+                            checkoutNeighborhoodId ||
+                            checkoutNeighborhoods[0]?.id ||
+                            ""
+                          }
+                          onChange={(e) => {
+                            const nextId = e.target.value;
+                            setCheckoutNeighborhoodId(nextId);
+                            const chosen = courierNeighborhoods.find(
+                              (n) => n.id === nextId,
+                            );
+                            if (chosen) {
+                              setSelectedNeighborhood(
+                                toStoredNeighborhood(chosen),
+                                { silent: true },
+                              );
+                              setSelectedAddressId("new");
+                              setFullAddress("");
+                              setDirections("");
+                            }
+                          }}
+                          className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
+                        >
+                          {checkoutNeighborhoods.map((nb) => (
+                            <option key={nb.id} value={nb.id}>
+                              {nb.neighborhood}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
 
-                <div>
-                  <label
-                    htmlFor="checkout-address"
-                    className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
-                  >
-                    Açık Adres (Sokak, Bina No, Daire) *
-                  </label>
-                  <textarea
-                    id="checkout-address"
-                    required
-                    minLength={5}
-                    rows={2}
-                    placeholder="Örn. Süleyman Seba Cad. No: 42 Kat: 3 Daire: 7"
-                    value={fullAddress}
-                    onChange={(e) => setFullAddress(e.target.value)}
-                    className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3.5 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
-                  />
-                </div>
+                    <div>
+                      <label
+                        htmlFor="checkout-address"
+                        className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
+                      >
+                        Açık Adres (Sokak, Bina No, Daire) *
+                      </label>
+                      <textarea
+                        id="checkout-address"
+                        required
+                        minLength={5}
+                        rows={2}
+                        placeholder="Örn. Süleyman Seba Cad. No: 42 Kat: 3 Daire: 7"
+                        value={fullAddress}
+                        onChange={(e) => setFullAddress(e.target.value)}
+                        className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3.5 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
+                      />
+                    </div>
 
-                <div>
-                  <label
-                    htmlFor="checkout-directions"
-                    className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
-                  >
-                    Adres Tarifi
-                  </label>
-                  <input
-                    id="checkout-directions"
-                    type="text"
-                    placeholder="Örn. Eczanenin yanındaki kahverengi bina"
-                    value={directions}
-                    onChange={(e) => setDirections(e.target.value)}
-                    className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3.5 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
-                  />
-                </div>
+                    <div>
+                      <label
+                        htmlFor="checkout-directions"
+                        className="block text-xs font-semibold uppercase tracking-wide text-[#5C4338] mb-1"
+                      >
+                        Adres Tarifi
+                      </label>
+                      <input
+                        id="checkout-directions"
+                        type="text"
+                        placeholder="Örn. Eczanenin yanındaki kahverengi bina"
+                        value={directions}
+                        onChange={(e) => setDirections(e.target.value)}
+                        className="w-full rounded-xl border border-[#DFD2C3] bg-white px-3.5 py-2.5 text-sm text-[#1D110C] focus:outline-none focus:ring-2 focus:ring-[#C68B3C]/40"
+                      />
+                    </div>
+                  </>
+                )}
 
                 <div>
                   <label
@@ -892,7 +926,7 @@ export function CartDrawer() {
                   />
                 </div>
 
-                {selectedAddressId === "new" && (
+                {!addressesLoading && selectedAddressId === "new" && (
                   <div className="rounded-xl border border-[#E6D9CB] bg-[#FBF6F0] p-3 space-y-2">
                     <label className="flex items-center gap-2 text-xs font-semibold text-[#1D110C] cursor-pointer">
                       <input

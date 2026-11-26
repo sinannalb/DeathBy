@@ -14,6 +14,8 @@ import {
   Sparkles,
   Store,
   UtensilsCrossed,
+  X,
+  ZoomIn,
 } from "lucide-react";
 import type {
   BranchSummaryDTO,
@@ -55,7 +57,24 @@ export function MenuBrowser() {
   const [optionProduct, setOptionProduct] = useState<MenuProductDTO | null>(
     null,
   );
+  const [lightboxProduct, setLightboxProduct] = useState<MenuProductDTO | null>(
+    null,
+  );
   const [showInlinePicker, setShowInlinePicker] = useState(true);
+
+  useEffect(() => {
+    if (!lightboxProduct) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxProduct(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [lightboxProduct]);
 
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
@@ -569,18 +588,42 @@ export function MenuBrowser() {
                         }`}
                       >
                         {/* Thumbnail */}
-                        <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden shrink-0 border border-[#EFE6DC] bg-[#2C1A12]">
-                          <ProductImage
-                            src={product.imageUrl}
-                            alt={product.name}
-                            priority={catIdx === 0 && prodIdx < 3}
-                          />
-                          {inCartQty > 0 && (
-                            <span className="absolute top-1.5 left-1.5 rounded-full bg-[#C68B3C] text-white text-[10px] font-bold px-2 py-0.5 shadow-sm">
-                              {inCartQty}x
+                        {product.imageUrl ? (
+                          <button
+                            type="button"
+                            onClick={() => setLightboxProduct(product)}
+                            aria-label={`${product.name} görselini büyük görüntüle`}
+                            className="group relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden shrink-0 border border-[#EFE6DC] bg-[#2C1A12] cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-[#C68B3C]"
+                          >
+                            <ProductImage
+                              src={product.imageUrl}
+                              alt={product.name}
+                              priority={catIdx === 0 && prodIdx < 3}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            />
+                            {inCartQty > 0 && (
+                              <span className="absolute top-1.5 left-1.5 rounded-full bg-[#C68B3C] text-white text-[10px] font-bold px-2 py-0.5 shadow-sm">
+                                {inCartQty}x
+                              </span>
+                            )}
+                            <span className="absolute bottom-1.5 right-1.5 rounded-full bg-black/55 p-1 text-white opacity-85 group-hover:opacity-100 transition-opacity">
+                              <ZoomIn className="w-3 h-3" />
                             </span>
-                          )}
-                        </div>
+                          </button>
+                        ) : (
+                          <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden shrink-0 border border-[#EFE6DC] bg-[#2C1A12]">
+                            <ProductImage
+                              src={product.imageUrl}
+                              alt={product.name}
+                              priority={catIdx === 0 && prodIdx < 3}
+                            />
+                            {inCartQty > 0 && (
+                              <span className="absolute top-1.5 left-1.5 rounded-full bg-[#C68B3C] text-white text-[10px] font-bold px-2 py-0.5 shadow-sm">
+                                {inCartQty}x
+                              </span>
+                            )}
+                          </div>
+                        )}
 
                         {/* Info */}
                         <div className="flex-1 min-w-0 flex flex-col justify-between">
@@ -678,6 +721,99 @@ export function MenuBrowser() {
         product={optionProduct}
         onClose={() => setOptionProduct(null)}
       />
+
+      {/* Large Image Lightbox Modal */}
+      {lightboxProduct && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightboxProduct.name}
+          onClick={() => setLightboxProduct(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-[#C68B3C]/40 bg-[#1D110C] shadow-2xl"
+          >
+            <button
+              type="button"
+              onClick={() => setLightboxProduct(null)}
+              aria-label="Görseli kapat"
+              className="absolute top-3 right-3 z-10 rounded-full bg-black/65 hover:bg-black/85 p-2 text-white transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="aspect-square w-full bg-[#120D0C] overflow-hidden">
+              <ProductImage
+                src={lightboxProduct.imageUrl}
+                alt={lightboxProduct.name}
+                priority
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="bg-[#FFFDF9] p-4 sm:p-5 border-t border-[#E6D9CB]">
+              <h3 className="font-serif font-bold text-base sm:text-lg text-[#1D110C]">
+                {lightboxProduct.name}
+              </h3>
+              {lightboxProduct.description && (
+                <p className="text-xs sm:text-sm text-[#5C4338] mt-1 leading-relaxed">
+                  {lightboxProduct.description}
+                </p>
+              )}
+
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <span className="text-base sm:text-lg font-bold text-[#2C1A12]">
+                  {formatTl(lightboxProduct.price)}
+                </span>
+
+                {(() => {
+                  const soldOut = !lightboxProduct.branchAvailable;
+                  const disabled =
+                    soldOut ||
+                    !selectedNeighborhood ||
+                    Boolean(outOfServiceMessage) ||
+                    branchStatus?.canAcceptOrders === false;
+                  let btnLabel = "Sepete Ekle";
+                  if (soldOut) btnLabel = "Şubede Tükendi";
+                  else if (!selectedNeighborhood || outOfServiceMessage)
+                    btnLabel = "Mahalle Seçin";
+                  else if (branchStatus?.canAcceptOrders === false)
+                    btnLabel = "Şube Kapalı";
+
+                  return (
+                    <button
+                      type="button"
+                      disabled={
+                        soldOut ||
+                        (Boolean(selectedNeighborhood) &&
+                          !outOfServiceMessage &&
+                          branchStatus?.canAcceptOrders === false)
+                      }
+                      onClick={() => {
+                        const target = lightboxProduct;
+                        setLightboxProduct(null);
+                        handleProductAction(target);
+                      }}
+                      className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors ${
+                        disabled
+                          ? "bg-[#EFE6DC] text-[#8A6F62] cursor-not-allowed"
+                          : "bg-[#2C1A12] hover:bg-[#1D110C] text-[#FBF6F0] cursor-pointer shadow-xs"
+                      }`}
+                    >
+                      {!disabled && (
+                        <Plus className="w-4 h-4 text-[#C68B3C]" />
+                      )}
+                      <span>{btnLabel}</span>
+                    </button>
+                  );
+                })()}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

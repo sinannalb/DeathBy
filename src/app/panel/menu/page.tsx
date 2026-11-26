@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { RootGroup } from "@prisma/client";
 import {
@@ -13,6 +13,7 @@ import {
   SlidersHorizontal,
   Tags,
   Trash2,
+  Upload,
   UtensilsCrossed,
   X,
 } from "lucide-react";
@@ -96,6 +97,10 @@ export default function PanelMenuPage() {
   const [prodIsActive, setProdIsActive] = useState(true);
   const [prodOptionGroupIds, setProdOptionGroupIds] = useState<string[]>([]);
   const [savingProduct, setSavingProduct] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Delete product confirmation (Admin)
   const [deleteTarget, setDeleteTarget] = useState<PanelProductItem | null>(
@@ -243,6 +248,7 @@ export default function PanelMenuPage() {
     setProdSortOrder(String(products.length));
     setProdIsActive(true);
     setProdOptionGroupIds([]);
+    setUploadError(null);
     setProductModalOpen(true);
   };
 
@@ -256,7 +262,84 @@ export default function PanelMenuPage() {
     setProdSortOrder(String(p.sortOrder));
     setProdIsActive(p.isActive);
     setProdOptionGroupIds(p.optionGroupIds);
+    setUploadError(null);
     setProductModalOpen(true);
+  };
+
+  const compressImageIfNeeded = async (file: File): Promise<File> => {
+    if (file.type === "image/gif" || file.size <= 1.2 * 1024 * 1024) {
+      return file;
+    }
+
+    try {
+      const bitmap = await createImageBitmap(file);
+      const maxDim = 1200;
+      const scale = Math.min(1, maxDim / Math.max(bitmap.width, bitmap.height));
+      const targetW = Math.max(1, Math.round(bitmap.width * scale));
+      const targetH = Math.max(1, Math.round(bitmap.height * scale));
+
+      const canvas = document.createElement("canvas");
+      canvas.width = targetW;
+      canvas.height = targetH;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        bitmap.close();
+        return file;
+      }
+      ctx.drawImage(bitmap, 0, 0, targetW, targetH);
+      bitmap.close();
+
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, "image/jpeg", 0.86),
+      );
+      if (!blob) return file;
+
+      const baseName = file.name.replace(/\.[^.]+$/, "") || "urun-gorseli";
+      return new File([blob], `${baseName}.jpg`, { type: "image/jpeg" });
+    } catch {
+      return file;
+    }
+  };
+
+  const handleImageFileSelected = async (file: File) => {
+    if (!isAdmin) return;
+    if (!file.type.startsWith("image/")) {
+      setUploadError("Lütfen yalnızca geçerli bir görsel dosyası seçin.");
+      return;
+    }
+
+    setUploadingImage(true);
+    setUploadError(null);
+
+    try {
+      const prepared = await compressImageIfNeeded(file);
+      const formData = new FormData();
+      formData.append("file", prepared);
+
+      const res = await fetch("/api/panel/uploads", {
+        method: "POST",
+        body: formData,
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
+      };
+
+      if (!res.ok || !data.url) {
+        setUploadError(data.error || "Görsel yüklenemedi.");
+        return;
+      }
+
+      setProdImageUrl(data.url);
+      showToast("Görsel yüklendi. Kaydetmek için 'Ürünü Kaydet' butonuna basın.");
+    } catch {
+      setUploadError("Görsel yüklenirken bağlantı hatası oluştu.");
+    } finally {
+      setUploadingImage(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
   };
 
   const toggleProductOptionGroup = (groupId: string) => {
@@ -801,15 +884,97 @@ export default function PanelMenuPage() {
 
               <div>
                 <label className="block text-xs font-bold text-[#4A3429]">
-                  Görsel URL (İsteğe Bağlı)
+                  Ürün Görseli
                 </label>
-                <input
-                  type="text"
-                  value={prodImageUrl}
-                  onChange={(e) => setProdImageUrl(e.target.value)}
-                  placeholder="https://... veya /images/..."
-                  className="mt-1.5 w-full rounded-xl border border-[#DAC8B8] px-3 py-2 text-sm focus:border-[#2C1810] focus:outline-none"
-                />
+
+                <div className="mt-1.5 flex flex-col sm:flex-row gap-3 items-start">
+                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-[#DAC8B8] bg-[#FAF6F0] flex items-center justify-center">
+                    {prodImageUrl.trim() ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={prodImageUrl.trim()}
+                          alt={prodName || "Ürün önizleme"}
+                          className="h-full w-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setProdImageUrl("")}
+                          title="Görseli Kaldır"
+                          aria-label="Görseli Kaldır"
+                          className="absolute top-1 right-1 rounded-full bg-black/70 p-1 text-white hover:bg-black"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </>
+                    ) : (
+                      <ImageIcon className="h-6 w-6 text-[#B99D88]" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 w-full space-y-2">
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) void handleImageFileSelected(file);
+                      }}
+                    />
+
+                    <button
+                      type="button"
+                      disabled={uploadingImage}
+                      onClick={() => fileInputRef.current?.click()}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        setDragActive(true);
+                      }}
+                      onDragLeave={() => setDragActive(false)}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        setDragActive(false);
+                        const file = e.dataTransfer.files?.[0];
+                        if (file) void handleImageFileSelected(file);
+                      }}
+                      className={`w-full rounded-xl border border-dashed px-4 py-3 text-left transition flex items-center gap-3 cursor-pointer disabled:opacity-60 ${
+                        dragActive
+                          ? "border-[#D4A048] bg-[#FDF4E7]"
+                          : "border-[#CBBBAE] bg-[#FAF6F0] hover:border-[#2C1810]"
+                      }`}
+                    >
+                      <div className="rounded-lg bg-[#2C1810] p-2 text-[#D4A048] shrink-0">
+                        <Upload className="h-4 w-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-[#24140E]">
+                          {uploadingImage
+                            ? "Görsel Yükleniyor..."
+                            : "Görsel Yükle (JPG, PNG, WebP)"}
+                        </p>
+                        <p className="text-[11px] text-[#6E5549] truncate">
+                          Dosya seçmek için tıklayın veya sürükleyip bırakın
+                        </p>
+                      </div>
+                    </button>
+
+                    {uploadError && (
+                      <p className="text-xs font-semibold text-rose-700">
+                        {uploadError}
+                      </p>
+                    )}
+
+                    <input
+                      type="text"
+                      value={prodImageUrl}
+                      onChange={(e) => setProdImageUrl(e.target.value)}
+                      placeholder="veya görsel URL yapıştırın (https://... veya /products/...)"
+                      className="w-full rounded-xl border border-[#DAC8B8] px-3 py-1.5 text-xs text-[#24140E] focus:border-[#2C1810] focus:outline-none"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Linked Option Groups */}
@@ -874,7 +1039,7 @@ export default function PanelMenuPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={savingProduct}
+                  disabled={savingProduct || uploadingImage}
                   className="rounded-xl bg-[#2C1810] px-4 py-2 text-xs font-bold text-[#FAF3EA] hover:bg-[#412418] disabled:opacity-50"
                 >
                   {savingProduct ? "Kaydediliyor..." : "Ürünü Kaydet"}

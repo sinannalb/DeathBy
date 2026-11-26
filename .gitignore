@@ -2,6 +2,7 @@ node_modules/
 .next/
 .netlify/
 .pgdata/
+.uploads/
 .env
 .env.local
 next-env.d.ts
